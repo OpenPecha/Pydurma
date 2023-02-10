@@ -1,0 +1,1 @@
+BO_SYLLIST_PATH = './res/bo/syllist.txt'

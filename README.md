@@ -12,7 +12,7 @@
 
 ## Owner(s)
 
-- [@10zinten](https://github.com/10zinten)
+- [@elie](https://github.com/eroux)
 
 ## RFXs
 
@@ -54,21 +54,21 @@ Before using _OpenPecha Project Template_, ensure you have:
 
 Get started with _OpenPecha Project Template_ by refering to this [wiki](https://github.com/OpenPecha/Wiki/wiki/Coding-Guide-Line#project-setup)
 
-### Install _Project Name_
+### Install Vulgatizer
 
 1.  [Use this template](https://github.com/OpenPecha/openpecha-project-template/generate)
 
-### Configure _Project Name_
+### Configure Vulgatizer
 
 1. _Write the step here._
 2. _Write the step here._
 
-### Run _Project Name_
+### Run Vulgatizer
 
 1. _Write the step here._
 2. _Write the step here._
 
-### Troubleshoot _Project Name_
+### Troubleshoot Vulgatizer
 
 1. _Write the step here._
 2. _Write the step here._
@@ -136,4 +136,4 @@ For more information:
 
 ## Terms of use
 
-_Project Name_ is licensed under the [MIT License](/LICENSE.md).
+Vulgatizer is licensed under the [MIT License](/LICENSE.md).
