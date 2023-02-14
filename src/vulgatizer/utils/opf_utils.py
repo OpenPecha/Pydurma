@@ -3,9 +3,9 @@ from openpecha.core.pecha import OpenPecha
 from openpecha.core.pecha import OpenPechaFS
 from openpecha.core.layer import Layer, LayerEnum, PechaMetadata
 from openpecha.core.annotations import OCRConfidence, Pagination, Span, BaseAnnotation
-from tokenizer import Token
 from typing import List
 
+from vulgatizer.tokenizers.tokenizer import Token
 
 class OPSegment:
     """

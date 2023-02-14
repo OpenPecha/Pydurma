@@ -2,11 +2,11 @@ import re
 import regex
 
 
-from tokenizer import Tokenizer, TokenList
 from typing import Tuple
 
 from vulgatizer.normalizers.normalizer import Normalizer
 from vulgatizer.normalizers.normalizer_bo import TibetanNormalizer
+from vulgatizer.tokenizers.tokenizer import Tokenizer, TokenList
 from vulgatizer.vocabularies.vocabulary import Vocabulary
 
 class TibetanTokenizer(Tokenizer):
