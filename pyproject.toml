@@ -23,6 +23,9 @@ dev = [
     "pytest",
     "pytest-cov",
     "pre-commit",
+    "openpecha",
+    "fast-diff-match-patch",
+    "numpy"
 ]
 
 
