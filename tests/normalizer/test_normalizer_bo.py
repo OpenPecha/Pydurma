@@ -1,12 +1,13 @@
-from vulgatizer.normalizers.normalizer_bo import assert_conv, remove_affixes
+from vulgatizer.bo.normalizer_bo import assert_conv, remove_affixes
+
 
 def test_remove_affixes():
-    assert(remove_affixes("དག") == "དག")
-    assert(remove_affixes("གའམ") == "ག")
-    assert(remove_affixes("དགའ") == "དགའ")
-    assert(remove_affixes("དགའི") == "དགའ")
-    assert(remove_affixes("ཀུནད") == "ཀུན")
-    assert(remove_affixes("འོནད") == "འོན")
+    assert remove_affixes("དག") == "དག"
+    assert remove_affixes("གའམ") == "ག"
+    assert remove_affixes("དགའ") == "དགའ"
+    assert remove_affixes("དགའི") == "དགའ"
+    assert remove_affixes("ཀུནད") == "ཀུན"
+    assert remove_affixes("འོནད") == "འོན"
 
 
 def test_normalize_unicode():
@@ -17,4 +18,4 @@ def test_normalize_unicode():
     assert_conv("\u0F66\u0F7C\u0FB1", "\u0F66\u0FB1\u0F7C")
     assert_conv("\u0F0B\u0F7E", "\u0F0B\u0F7E", False)
     assert_conv("\u0f65\u0f99\u0f7a\u0f7a", "\u0f62\u0f99\u0f7b")
-    assert_conv("\u0f01\u0f83", "\u0f01\u0f83") # should be valid
+    assert_conv("\u0f01\u0f83", "\u0f01\u0f83")  # should be valid

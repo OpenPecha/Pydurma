@@ -1,21 +1,22 @@
 from typing import List, Tuple
 
-from vulgatizer.weighers.token_weigher import TokenWeigher
+from vulgatizer.tokenizer import Token
 from vulgatizer.vulgaligners.vulgaligner import TokenMatrix
-from vulgatizer.tokenizer import Token, TokenList
+from vulgatizer.weighers.token_weigher import TokenWeigher
 
 WeightedWeights = Tuple[List[int], int]
 WeightedWeighers = Tuple[TokenWeigher, int]
 WeightMatrix = List[List[int]]
 
-class TokenMatrixWeigher():
+
+class TokenMatrixWeigher:
     """
     This class produces a weight matrix with the same dimensions and structure as the token matrix.
 
     It is initialized by adding TokenWeighers and assigning a weight to each of them.
     """
 
-    def __init__(self, weigh_identical_rows = False):
+    def __init__(self, weigh_identical_rows=False):
         self.weighted_weighters: List[WeightedWeighers] = []
         # whether or not to weigh in the case where all tokens are identical in a column
         self.weigh_identical_rows = weigh_identical_rows
@@ -83,7 +84,10 @@ class TokenMatrixWeigher():
             if weight_total > 0:
                 weight = absolute_weight_sums[col_index] // weight_total
                 if relative_weight_sums[col_index] > 0:
-                    relative_weight = relative_weight_sums[col_index] // relative_weight_totals[col_index]
+                    relative_weight = (
+                        relative_weight_sums[col_index]
+                        // relative_weight_totals[col_index]
+                    )
                     weight = int(weight * relative_weight / 100)
                 weight_matrix[row_index][col_index] = weight
 
@@ -98,34 +102,9 @@ class TokenMatrixWeigher():
         nb_columns = len(token_matrix[0])
         if len(self.weighted_weighters) == 0:
             return None
-        weight_matrix: WeightMatrix = [[None for _ in range(nb_columns)] for _ in range(nb_rows)]
+        weight_matrix: WeightMatrix = [
+            [None for _ in range(nb_columns)] for _ in range(nb_rows)
+        ]
         for row_index in range(nb_rows):
             self.fill_average_row_weights(token_matrix, weight_matrix, row_index)
         return weight_matrix
-
-
-if __name__ == "__main__":
-    from token_weigher_count import TokenCountWeigher
-    from token_weigher_valid_bo import ValidBoTokenWeigher
-    # token_matrix = [[(0, 5, 1, '༄༅། །'), (0, 5, 1, '༄༅། །'), (0, 5, 1, '༄༅། །'), (0, 4, 1, '༄། །'), (0, 5, 1, '༄༅། །'), None]]
-    token_matrix = [
-        [(436, 437, 1, '།'), (454, 462, 1, 'སྒྲོགས་ '), (433, 435, 1, '༐།'), None, None, None],
-        [(568, 575, 1, 'ཀྱེལ་་\n'), None, (566, 569, 1, 'ལ་\n'), (585, 589, 1, 'ལ་་\n'), None, (585, 589, 1, 'ལ་་\n')],
-        [(519, 526, 1, 'ཇི་\n་་་'), (542, 546, 1, 'ཇི་\n'), (511, 515, 1, 'ཇི་\n'), (527, 531, 1, 'ཤོག\n'), (526, 530, 1, 'ཤོག\n'), (527, 531, 1, 'ཤོག\n')],
-        [(848, 852, 1, 'བ་་\n'), (861, 866, 1, 'བ་་་\n'), (830, 834, 1, 'བ་་\n'), None, None, None],
-        [(618, 621, 1, 'གི་'), (635, 638, 1, 'གི་'), (604, 607, 1, 'གི་'), (620, 623, 1, 'གི་'), (617, 620, 1, 'གི་'), (620, 623, 1, 'གི་')],
-        [(123, 124, 1, 'བ'), None, (120, 122, 1, '('), None, None, None]
-        ]
-    row_index = 5
-    weight_matrix = [[None for _ in range(len(token_matrix[0]))] for _ in range(len(token_matrix))]
-    weigher = TokenMatrixWeigher()
-    # assert(weigher.is_the_same_token([(0,0,0,"a"), (0,0,0,"a"), (0,0,0,"a")]))
-    # assert(not weigher.is_the_same_token([(0,0,0,"a"), (0,0,0,"q"), (0,0,0,"a")]))
-    # assert(not weigher.is_the_same_token([(0,0,0,"a"), None, (0,0,0,"a")]))
-    weigher.add_weigher(TokenCountWeigher(), 1)
-    weigher.add_weigher(ValidBoTokenWeigher(), 1)
-    # weigher.add_weigher(ValidBoTokenWeigher(), 1)
-    weigher.fill_average_row_weights(token_matrix, weight_matrix, row_index)
-    print(weight_matrix)
-    expected_weight_matrix = [[68, 68, 68, 43, 68, 16]]
-    assert expected_weight_matrix == weight_matrix

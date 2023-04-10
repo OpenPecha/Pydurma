@@ -1,24 +1,27 @@
-import regex
-
-from tokenizer import Tokenizer, TokenList, Token
 from typing import List, Tuple
 
+import regex
+
 from vulgatizer.normalizer import Normalizer
+from vulgatizer.tokenizer import Token, Tokenizer, TokenList
 from vulgatizer.vocabulary import Vocabulary
+
 
 class GenericTokenizer(Tokenizer):
 
-    # This pattern doesn't work with the re package because of 
+    # This pattern doesn't work with the re package because of
     # sub-optimal Unicode support. Inspired from the default pattern
     # of CollateX.
 
     word_punctuation_pattern = regex.compile(r"(?u)\w+\s*|\W+")
 
-    def __init__(self, vocabulary: Vocabulary, normalizer: Normalizer, stop_words: List[str] = []):
+    def __init__(
+        self, vocabulary: Vocabulary, normalizer: Normalizer, stop_words: List[str] = []
+    ):
         super().__init__(vocabulary, normalizer)
         self.stop_words = stop_words
 
-    def tokenize(self, s: str, start=0, end: int=None) -> Tuple[str, TokenList]:
+    def tokenize(self, s: str, start=0, end: int = None) -> Tuple[str, TokenList]:
         tokens = []
         tokenstr = ""
         if end is None:

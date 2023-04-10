@@ -1,5 +1,4 @@
 import re
-
 from enum import Enum
 
 from vulgatizer import config
@@ -16,52 +15,58 @@ class Cats(Enum):
     TopMark = 6
     RightMark = 7
 
-CATEGORIES =  ([Cats.Other]           # 0F00
-             + [Cats.Base]            # 0F01, often followed by 0f083
-             + [Cats.Other] * 22      # 0F02-0F17
-             + [Cats.BottomVowel] * 2 # 0F18-0F19
-             + [Cats.Other] * 6       # 0F1A-0F1F
-             + [Cats.Base] * 20       # 0F20-0F33, numbers can be followed by 0f18, 0f19 or exceptionally by vowels
-             + [Cats.Other]           # 0F34
-             + [Cats.BottomMark]      # 0F35
-             + [Cats.Other]           # 0F36
-             + [Cats.BottomMark]      # OF37
-             + [Cats.Other]           # 0F38
-             + [Cats.Subscript]       # 0F39, kind of cheating but works
-             + [Cats.Other] * 4       # 0F3A-0F3D
-             + [Cats.RightMark]       # 0F3E
-             + [Cats.Other]           # 0F3F, not quite sure
-             + [Cats.Base] * 45       # 0F40-0F6C
-             + [Cats.Other] * 4       # 0F6D-0F70
-             + [Cats.BottomVowel]     # 0F71
-             + [Cats.TopVowel]        # 0F72
-             + [Cats.TopVowel]        # 0F73
-             + [Cats.BottomVowel] * 2 # 0F74-0F75
-             + [Cats.TopVowel] * 8    # 0F76-0F7D
-             + [Cats.TopMark]         # 0F7E
-             + [Cats.RightMark]       # 0F7F
-             + [Cats.TopVowel] * 2    # 0F80-0F81
-             + [Cats.TopMark] * 2     # 0F82-0F83
-             + [Cats.BottomMark]      # 0F84
-             + [Cats.Other]           # 0F85
-             + [Cats.TopMark] * 2     # 0F86-0F87
-             + [Cats.Base] * 2        # 0F88-0F89
-             + [Cats.Base]            # 0F8A always followed by 0f82 (required by the Unicode spec)
-             + [Cats.Other]           # 0F8B
-             + [Cats.Base]            # 0F8C
-             + [Cats.Subscript] * 48  # 0F8D-0FBC
-             )
+
+CATEGORIES = (
+    [Cats.Other]  # 0F00
+    + [Cats.Base]  # 0F01, often followed by 0f083
+    + [Cats.Other] * 22  # 0F02-0F17
+    + [Cats.BottomVowel] * 2  # 0F18-0F19
+    + [Cats.Other] * 6  # 0F1A-0F1F
+    + [Cats.Base]
+    * 20  # 0F20-0F33, numbers can be followed by 0f18, 0f19 or exceptionally by vowels
+    + [Cats.Other]  # 0F34
+    + [Cats.BottomMark]  # 0F35
+    + [Cats.Other]  # 0F36
+    + [Cats.BottomMark]  # OF37
+    + [Cats.Other]  # 0F38
+    + [Cats.Subscript]  # 0F39, kind of cheating but works
+    + [Cats.Other] * 4  # 0F3A-0F3D
+    + [Cats.RightMark]  # 0F3E
+    + [Cats.Other]  # 0F3F, not quite sure
+    + [Cats.Base] * 45  # 0F40-0F6C
+    + [Cats.Other] * 4  # 0F6D-0F70
+    + [Cats.BottomVowel]  # 0F71
+    + [Cats.TopVowel]  # 0F72
+    + [Cats.TopVowel]  # 0F73
+    + [Cats.BottomVowel] * 2  # 0F74-0F75
+    + [Cats.TopVowel] * 8  # 0F76-0F7D
+    + [Cats.TopMark]  # 0F7E
+    + [Cats.RightMark]  # 0F7F
+    + [Cats.TopVowel] * 2  # 0F80-0F81
+    + [Cats.TopMark] * 2  # 0F82-0F83
+    + [Cats.BottomMark]  # 0F84
+    + [Cats.Other]  # 0F85
+    + [Cats.TopMark] * 2  # 0F86-0F87
+    + [Cats.Base] * 2  # 0F88-0F89
+    + [Cats.Base]  # 0F8A always followed by 0f82 (required by the Unicode spec)
+    + [Cats.Other]  # 0F8B
+    + [Cats.Base]  # 0F8C
+    + [Cats.Subscript] * 48  # 0F8D-0FBC
+)
+
 
 def charcat(c):
-    ''' Returns the category for a single char string'''
+    """Returns the category for a single char string"""
     o = ord(c)
     if 0x0F00 <= o <= 0x0FBC:
-        return CATEGORIES[o-0x0F00]
+        return CATEGORIES[o - 0x0F00]
     return Cats.Other
 
+
 # debug:
-#for i, c in enumerate(CATEGORIES):
+# for i, c in enumerate(CATEGORIES):
 #    print("%x : %d" % (0x0F00 + i , c.value))
+
 
 def unicode_reorder(txt):
     # case of a syllable starting with a diacritic (ex: a vowel or subscript)
@@ -90,11 +95,12 @@ def unicode_reorder(txt):
             j += 1
         # sort syllable based on character categories
         # sort the char indices by category then position in string
-        newindices = sorted(range(i, j), key=lambda e:(charcats[e].value, e))
+        newindices = sorted(range(i, j), key=lambda e: (charcats[e].value, e))
         replaces = "".join(txt[n] for n in newindices)
         res.append(replaces)
         i = j
     return "".join(res), valid
+
 
 def normalize_unicode(s, form="nfd"):
     # first, unify Unicode form:
@@ -104,11 +110,11 @@ def normalize_unicode(s, form="nfd"):
     # although for some reason this chart considers 0f0c -> 0f0b in NFD
     #
     # deprecated or discouraged characters
-    s = s.replace("\u0f73", "\u0f71\u0f72") # use is discouraged
-    s = s.replace("\u0f75", "\u0f71\u0f74") # use is discouraged
-    s = s.replace("\u0f77", "\u0fb2\u0f71\u0f80") # deprecated
-    s = s.replace("\u0f79", "\u0fb3\u0f71\u0f80") # deprecated
-    s = s.replace("\u0f81", "\u0f71\u0f80") # use is discouraged
+    s = s.replace("\u0f73", "\u0f71\u0f72")  # use is discouraged
+    s = s.replace("\u0f75", "\u0f71\u0f74")  # use is discouraged
+    s = s.replace("\u0f77", "\u0fb2\u0f71\u0f80")  # deprecated
+    s = s.replace("\u0f79", "\u0fb3\u0f71\u0f80")  # deprecated
+    s = s.replace("\u0f81", "\u0f71\u0f80")  # use is discouraged
     if form == "nfd":
         s = s.replace("\u0f43", "\u0f42\u0fb7")
         s = s.replace("\u0f4d", "\u0f4c\u0fb7")
@@ -151,6 +157,7 @@ def normalize_unicode(s, form="nfd"):
     s = normalize_invalid_start_tokens(s)
     return s, valid
 
+
 def normalize_graphical(s):
     """
     These substitutions normalize things that have the same
@@ -182,14 +189,15 @@ def normalize_graphical(s):
     # for instance སཱྱ on https://adarsha.dharma-treasure.org/kdbs/jiangkangyur?pbId=2627013
     return s
 
+
 def normalize_punctuation(s, use_gter_shad=False, original_eol=True):
     # normalize spaces
     s = re.sub(r"\s+", " ", s)
     # both are done in the usual normalization
     # no graphical distinction between 0f0b and 0f0c
-    #s = s.replace("\u0f0c", "\u0f0b")
+    # s = s.replace("\u0f0c", "\u0f0b")
     # double shad is just two shad
-    #s = s.replace("\u0f0e", "\u0f0d\u0f0d")
+    # s = s.replace("\u0f0e", "\u0f0d\u0f0d")
     # we don't want to keep double tshegs (I suppose)
     s = s.replace("\u0fd2", "\u0f0b")
     # normalize end of line characters
@@ -202,12 +210,20 @@ def normalize_punctuation(s, use_gter_shad=False, original_eol=True):
         s = s.replace("\u0f11", "\u0f0d")
         # remove all yig mgo: 0f01+diacritic?, 0f02-0f07, 0fd0-0fd1, 0fd3-0fd4
         # as well as their surrounding punctuation: space, 0f0d-0f11, 0f14
-        s = re.sub(r"[ \u0f0d-\u0f11\u0f14]*[\u0f01-\u0f07\u0fd0\u0fd1\u0fd3\u0fd4]+[ \u0f0d-\u0f11\u0f14\u0f71-\u0f87]*", "", s)
+        s = re.sub(
+            r"[ \u0f0d-\u0f11\u0f14]*[\u0f01-\u0f07\u0fd0\u0fd1\u0fd3\u0fd4]+[ \u0f0d-\u0f11\u0f14\u0f71-\u0f87]*",
+            "",
+            s,
+        )
         # remove all punctuation at beginning of line
         s = re.sub(r"(^|[\n])[\u0f0b-\u0f14]+", "\\1", s)
         # ensure tsheg at end of line after normal letters, except after ཀ, ག and ཤ
         # (where the absence of a tsheg should be interpreted as the presence of a shad)
-        s = re.sub(r"([\u0f41\u0f43-\u0f63\u0f65-\u0f6c][\u0f71-\u0fbc]*) *($|[\n])", "\\1\u0f0b\\2", s)
+        s = re.sub(
+            r"([\u0f41\u0f43-\u0f63\u0f65-\u0f6c][\u0f71-\u0fbc]*) *($|[\n])",
+            "\\1\u0f0b\\2",
+            s,
+        )
         # ensure space after ཀ, ག and ཤ at end of line so that it merges well with the following one
         # remove line breaks and spaces at beginning of lines
         s = re.sub(r"([ཀགཤ][\u0f71-\u0f87]*)\n", "\\1 \n", s)
@@ -237,6 +253,7 @@ def normalize_punctuation(s, use_gter_shad=False, original_eol=True):
     # TODO
     return s
 
+
 def normalize_punctuation_token_always(s, keep_eol=True):
     """
     Here we assume we have a token that comes out of the TibetanTokenizer
@@ -250,7 +267,11 @@ def normalize_punctuation_token_always(s, keep_eol=True):
     else:
         # remove all yig mgo: 0f01+diacritic?, 0f02-0f07, 0fd0-0fd1, 0fd3-0fd4
         # as well as their surrounding punctuation: space, 0f0d-0f11, 0f14
-        s = re.sub(r"[ \u0f0d-\u0f11\u0f14]*[\u0f01-\u0f07\u0fd0\u0fd1\u0fd3\u0fd4]+[ \u0f0d-\u0f11\u0f14\u0f71-\u0f87]*", "", s)
+        s = re.sub(
+            r"[ \u0f0d-\u0f11\u0f14]*[\u0f01-\u0f07\u0fd0\u0fd1\u0fd3\u0fd4]+[ \u0f0d-\u0f11\u0f14\u0f71-\u0f87]*",
+            "",
+            s,
+        )
         # ensure space after ཀ, ག and ཤ at end of line so that it merges well with the following one
         # remove line breaks and spaces at beginning of lines
         s = re.sub(r"([ཀགཤ][\u0f71-\u0f87]*)\n", r"\1 ", s)
@@ -271,6 +292,7 @@ def normalize_punctuation_token_always(s, keep_eol=True):
     # replace shads with surrounding spaces by a simple shad with a space after
     s = re.sub(r"( *[\u0f0d] *)+", "\u0f0d ", s)
     return s
+
 
 def normalize_punctuation_token_pre_token_diff(s, keep_eol=True):
     # fold different types of shad into regular shad
@@ -296,23 +318,30 @@ def normalize_unusual(s):
     # TODO
     return s
 
+
 def debug_to_unicode(s):
     res = ""
     for c in s:
         res += "\\u%x " % ord(c)
     return res
 
-def assert_conv(orig, expected, expectedValid = True):
+
+def assert_conv(orig, expected, expectedValid=True):
     resultStr, resultValid = normalize_unicode(orig)
-    assert resultStr == expected, "%s -> %s but %s expected" % (debug_to_unicode(orig), debug_to_unicode(resultStr), debug_to_unicode(expected))
-    assert resultValid == expectedValid, "%s valid? -> %s but %s expected" % (debug_to_unicode(orig), resultValid, expectedValid)
+    assert resultStr == expected, "{} -> {} but {} expected".format(
+        debug_to_unicode(orig), debug_to_unicode(resultStr), debug_to_unicode(expected)
+    )
+    assert resultValid == expectedValid, "{} valid? -> {} but {} expected".format(
+        debug_to_unicode(orig), resultValid, expectedValid
+    )
 
 
 # Normalization of Old Tibetan shorthands
 
-# from Tibetan-nlp: Traditionally in Classical Tibetan, syllables are separated by a tsheg. 
+# from Tibetan-nlp: Traditionally in Classical Tibetan, syllables are separated by a tsheg.
 # In Old Tibetan texts, syllable margins are not so clear and often a syllable (verb, noun and so on)
-# is merged together with the following case marker or converb (For example: སྟགི > སྟག་གི,  དུསུ > དུས་སུ,  བཀུམོ > བཀུམ་མོ). 
+# is merged together with the following case marker or converb
+# (For example: སྟགི > སྟག་གི,  དུསུ > དུས་སུ,  བཀུམོ > བཀུམ་མོ).
 # Rule: Split merged syllables for cases as དྲངསྟེ > དྲངས་ཏེ
 #  ([ཀ-ྼ])སྟེ   -> $1ས་
 OLD_TIB_P1 = re.compile(r"([ཀ-ྼ])སྟེ")
@@ -338,10 +367,11 @@ OLD_TIB_P3 = re.compile(r"([ཀ-ཐདྷ-ཕབྷཙ-ཟཡ-ྼ])ག([ིྀ][^ཀ-�
 # see also https://github.com/tibetan-nlp/tibcg3/issues/6
 OLD_TIB_P4 = re.compile(r"([ཀ-ྼ][ཀ-ྼ]+)([ཀ-ཟཡ-ཬ])([ོེིྀུ])")
 
+
 def normalize_old_tib(s):
     """
     Normalizes Old Tibetan strings into classical Tibetan
-    /! should be applied before tokenization as it introduces tshegs 
+    /! should be applied before tokenization as it introduces tshegs
     """
     s = OLD_TIB_P1.sub(r"\1ས་ཏེ", s)
     s = OLD_TIB_P2.sub(r"\1་ཏ\2", s)
@@ -416,15 +446,17 @@ def normalize_old_tib(s):
     s = s.replace("ཅེན་པོ", "ཆེན་པོ")
     return s
 
+
 def test_normalize_old_tib(s):
-    assert(normalize_old_tib("དྲངསྟེ") == "དྲངས་ཏེ")
-    assert(normalize_old_tib("གཅལྟོ") == "ཅལད་ཏོ")
-    assert(normalize_old_tib("གགྀ་") == "གག་གྀ་")
+    assert normalize_old_tib("དྲངསྟེ") == "དྲངས་ཏེ"
+    assert normalize_old_tib("གཅལྟོ") == "ཅལད་ཏོ"
+    assert normalize_old_tib("གགྀ་") == "གག་གྀ་"
 
 
 def normalize_bo_token(s):
-    remove_tsheg(s)
+    # remove_tsheg(s)
     normalize_lenient(s)
+
 
 def normalize_lenient(s):
     # remove some marks
@@ -439,7 +471,7 @@ def normalize_lenient(s):
     s = s.replace("ྜ", "ྡ")
     s = s.replace("ྞ", "ྣ")
     s = s.replace("ཥ", "ཤ")
-    s = s.replace("ྵ" , "ྴ") # requires NFD
+    s = s.replace("ྵ", "ྴ")  # requires NFD
     # normalize non-semantic graphical variation
     s = s.replace("ྻ", "ྱ")
     s = s.replace("ྼ", "ྲ")
@@ -451,28 +483,31 @@ def normalize_lenient(s):
     s = s.replace("\u0f83", "\u0f7e")
     s = s.replace("\u0f86", "\u0f7e")
     # normalize gigus
-    s = s.replace("\u0f80", "\u0f72") # requires NFD
+    s = s.replace("\u0f80", "\u0f72")  # requires NFD
     # remove achung and wasur
     s = s.replace("ཱ", "")
     s = s.replace("ྺ", "")
     s = s.replace("ྭ", "")
     return s
 
+
 SUBST_SYLS = None
+
 
 def get_substs():
     global SUBST_SYLS
     if SUBST_SYLS is not None:
         return SUBST_SYLS
     SUBST_SYLS = {}
-    with open(config.BO_SYLLIST_PATH, encoding='UTF-8') as f:
-        for l in f.readlines():
-            l = l[:-1]
-            parts = l.split(",")
-            if len(parts) < 2:
+    with open(config.BO_SYLLIST_PATH, encoding="UTF-8") as f:
+        for syl in f.readlines():
+            syl = syl[:-1]
+            syl_parts = syl.split(",")
+            if len(syl_parts) < 2:
                 continue
-            SUBST_SYLS[parts[0]] = parts[1]
+            SUBST_SYLS[syl_parts[0]] = syl_parts[1]
     return SUBST_SYLS
+
 
 def normalize_substs(s):
     substs = get_substs()
@@ -480,10 +515,12 @@ def normalize_substs(s):
         return substs[s]
     return s
 
+
 def remove_punctuation(s):
     # we assume that Unicode normalization already took place
     s = re.sub(r"[\s\u0f0b\u0fd2]", "", s)
     return s
+
 
 def normalize_ngatadara(s):
     """
@@ -506,24 +543,80 @@ def normalize_ngatadara(s):
     # ng+ng | d+ng | ng+d -> d+d
     return s
 
+
 NEEDS_A = {
-    "ག": {"ཅ": True, "ཉ": True, "ཏ": True, "ད": True, "ན": True, "ཙ": True, "ཞ": True, "ཟ": True, "ཡ": True, "ཤ": True, "ས": True},
+    "ག": {
+        "ཅ": True,
+        "ཉ": True,
+        "ཏ": True,
+        "ད": True,
+        "ན": True,
+        "ཙ": True,
+        "ཞ": True,
+        "ཟ": True,
+        "ཡ": True,
+        "ཤ": True,
+        "ས": True,
+    },
     "ད": {"ཀ": True, "ག": True, "ང": True, "པ": True, "བ": True, "མ": True},
-    "བ": {"ཀ": True, "ག": True, "ཅ": True, "ཏ": True, "ད": True, "ཙ": True, "ཞ": True, "ཟ": True, "ཤ": True, "ས": True},
-    "མ": {"ཁ": True, "ག": True, "ང": True, "ཆ": True, "ཇ": True, "ཉ": True, "ཐ": True, "ད": True, "ན": True, "ཚ": True, "ཛ": True},
-    "འ": {"ཁ": True, "ག": True, "ཆ": True, "ཇ": True, "ཐ": True, "ད": True, "ཕ": True, "བ": True, "ཚ": True, "ཛ": True}
+    "བ": {
+        "ཀ": True,
+        "ག": True,
+        "ཅ": True,
+        "ཏ": True,
+        "ད": True,
+        "ཙ": True,
+        "ཞ": True,
+        "ཟ": True,
+        "ཤ": True,
+        "ས": True,
+    },
+    "མ": {
+        "ཁ": True,
+        "ག": True,
+        "ང": True,
+        "ཆ": True,
+        "ཇ": True,
+        "ཉ": True,
+        "ཐ": True,
+        "ད": True,
+        "ན": True,
+        "ཚ": True,
+        "ཛ": True,
+    },
+    "འ": {
+        "ཁ": True,
+        "ག": True,
+        "ཆ": True,
+        "ཇ": True,
+        "ཐ": True,
+        "ད": True,
+        "ཕ": True,
+        "བ": True,
+        "ཚ": True,
+        "ཛ": True,
+    },
 }
+
 
 def remove_affixes(s):
     # usual suffixes
     lens = len(s)
-    s = re.sub(r"([\u0f40-\u0fbc])(?:འིའོ|འིའམ|འིའང|འོའམ|འོའང|འིས|འི|འོ|འམ|འང|འས|འད|འར)$", r"\1", s)
+    s = re.sub(
+        r"([\u0f40-\u0fbc])(?:འིའོ|འིའམ|འིའང|འོའམ|འོའང|འིས|འི|འོ|འམ|འང|འས|འད|འར)$",
+        r"\1",
+        s,
+    )
     if len(s) != lens and len(s) > 1:
         # if a substitution has been made, make sure to add a suffix འ in the relevant cases:
         if s[-2] in NEEDS_A and s[-1] in NEEDS_A[s[-2]]:
             s += "འ"
     # remove འ suffix when not warranted
-    if len(s) > 2 and s[-1] == 'འ' and (s[-3] not in NEEDS_A or s[-2] not in NEEDS_A[s[-3]]):
+    if (
+        len(s) > 2
+        and s[-1] == "འ"
+        and (s[-3] not in NEEDS_A or s[-2] not in NEEDS_A[s[-3]])
+    ):
         s = s[:-1]
     s = s.replace("འུར", "འུ")
     s = s.replace("འུས", "འུ")
@@ -533,12 +626,13 @@ def remove_affixes(s):
 
 
 def is_vowel(char):
-    if re.search(r'[\u0f71-\u0f84]', char):
+    if re.search(r"[\u0f71-\u0f84]", char):
         return True
     return False
 
+
 def is_suffix(char):
-    if re.search(r'[\u0f90-\u0fbc]', char):
+    if re.search(r"[\u0f90-\u0fbc]", char):
         return True
     return False
 
@@ -550,18 +644,19 @@ def normalize_invalid_start_tokens(token):
         return token[1:]
     return token
 
+
 HAS_TIBETAN_RE = re.compile(r"[\u0f00-\u0fd8]")
 
-class TibetanNormalizer(Normalizer):
 
-    def __init__(self, keep_eol = True, normalize_old_tib = False, normalize_semantic = True):
+class TibetanNormalizer(Normalizer):
+    def __init__(self, keep_eol=True, normalize_old_tib=False, normalize_semantic=True):
         self.keep_eol = keep_eol
         self.normalize_old_tib = normalize_old_tib
         self.normalize_semantic = normalize_semantic
 
     def normalize_always(self, s):
         if HAS_TIBETAN_RE.search(s):
-            s,_ = normalize_unicode(s)
+            s, _ = normalize_unicode(s)
             s = normalize_graphical(s)
         else:
             s = normalize_punctuation_token_always(s, self.keep_eol)
@@ -585,5 +680,4 @@ class TibetanNormalizer(Normalizer):
         return s
 
     def append_normalized_token_string(self, s, token_string):
-        return s+token_string
-
+        return s + token_string
