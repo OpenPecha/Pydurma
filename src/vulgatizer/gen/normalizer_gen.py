@@ -1,6 +1,6 @@
 import re
 
-from vulgatizer.normalizers.normalizer import Normalizer
+from vulgatizer.normalizer import Normalizer
 
 class GenericNormalizer(Normalizer):
 

@@ -5,9 +5,9 @@ from openpecha.core.pecha import OpenPechaFS
 from openpecha.core.layer import Layer, LayerEnum, PechaMetadata
 
 from vulgatizer.vulgaligners.vulgaligner_fdmp import FDMPVulgaligner
-from vulgatizer.normalizers.normalizer_bo import TibetanNormalizer
-from vulgatizer.tokenizers.tokenizer_bo import TibetanTokenizer
-from vulgatizer.vocabularies.vocabulary import Vocabulary
+from vulgatizer.bo.normalizer_bo import TibetanNormalizer
+from vulgatizer.bo.tokenizer_bo import TibetanTokenizer
+from vulgatizer.vocabulary import Vocabulary
 from vulgatizer.weighers.matrix_weigher import TokenMatrixWeigher
 from vulgatizer.weighers.token_weigher_count import TokenCountWeigher
 from vulgatizer.weighers.token_weigher_valid_bo import ValidBoTokenWeigher

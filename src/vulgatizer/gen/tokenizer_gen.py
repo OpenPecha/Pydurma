@@ -3,8 +3,8 @@ import regex
 from tokenizer import Tokenizer, TokenList, Token
 from typing import List, Tuple
 
-from vulgatizer.normalizers.normalizer import Normalizer
-from vulgatizer.vocabularies.vocabulary import Vocabulary
+from vulgatizer.normalizer import Normalizer
+from vulgatizer.vocabulary import Vocabulary
 
 class GenericTokenizer(Tokenizer):
 

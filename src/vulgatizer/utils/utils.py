@@ -2,9 +2,9 @@ import logging
 
 from typing import List
 
-from vulgatizer.tokenizers.tokenizer import Token
+from vulgatizer.tokenizer import Token
 from vulgatizer.vulgaligners.vulgaligner import TokenMatrix
-from vulgatizer.vocabularies.vocabulary import Vocabulary
+from vulgatizer.vocabulary import Vocabulary
 
 
 def token_row_to_text_row(token_row: List[Token], basestr: str, text_for_gap: str = "-"):

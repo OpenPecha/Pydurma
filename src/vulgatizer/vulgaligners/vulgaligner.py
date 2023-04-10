@@ -1,6 +1,6 @@
 from typing import List
 
-from vulgatizer.tokenizers.tokenizer import TokenList
+from vulgatizer.tokenizer import TokenList
 
 TokenMatrix = List[TokenList]
 

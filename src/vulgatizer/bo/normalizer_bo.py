@@ -3,7 +3,7 @@ import re
 from enum import Enum
 
 from vulgatizer import config
-from vulgatizer.normalizers.normalizer import Normalizer
+from vulgatizer.normalizer import Normalizer
 
 
 class Cats(Enum):

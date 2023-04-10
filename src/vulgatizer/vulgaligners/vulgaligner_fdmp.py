@@ -5,7 +5,7 @@ from numpy import array
 from typing import Tuple, List
 
 from vulgatizer.vulgaligners.vulgaligner import TokenMatrix
-from vulgatizer.tokenizers.tokenizer import TokenList
+from vulgatizer.tokenizer import TokenList
 from vulgatizer.utils.utils import *
 
 # a diff returned by fdmp is a tuple with two values:

@@ -2,7 +2,7 @@ from typing import List, Tuple
 
 from vulgatizer.weighers.token_weigher import TokenWeigher
 from vulgatizer.vulgaligners.vulgaligner import TokenMatrix
-from vulgatizer.tokenizers.tokenizer import Token, TokenList
+from vulgatizer.tokenizer import Token, TokenList
 
 WeightedWeights = Tuple[List[int], int]
 WeightedWeighers = Tuple[TokenWeigher, int]

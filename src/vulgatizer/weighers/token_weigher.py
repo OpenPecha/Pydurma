@@ -1,6 +1,6 @@
 from typing import List
 
-from vulgatizer.tokenizers.tokenizer import Token
+from vulgatizer.tokenizer import Token
 
 class TokenWeigher():
     """

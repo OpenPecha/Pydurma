@@ -3,7 +3,7 @@ import re
 
 from typing import List
 
-from vulgatizer.tokenizers.tokenizer import Token
+from vulgatizer.tokenizer import Token
 from vulgatizer.weighers.token_weigher import TokenWeigher
 
 

@@ -1,7 +1,7 @@
 from typing import List
 
 from vulgatizer.weighers.token_weigher import TokenWeigher
-from vulgatizer.tokenizers.tokenizer import Token
+from vulgatizer.tokenizer import Token
 
 
 class TokenCountWeigher(TokenWeigher):

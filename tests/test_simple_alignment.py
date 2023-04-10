@@ -1,10 +1,10 @@
 import logging
 
-from tokenizer_gen import GenericTokenizer
-from vocabulary import Vocabulary
-from vulgaligner_fdmp import FDMPVulgaligner
-from normalizer_gen import GenericNormalizer
-from utils import *
+from vulgatizer.gen.tokenizer_gen import GenericTokenizer
+from vulgatizer.vocabulary import Vocabulary
+from vulgatizer.vulgaligners.vulgaligner_fdmp import FDMPVulgaligner
+from vulgatizer.gen.normalizer_gen import GenericNormalizer
+from vulgatizer.utils.utils import *
 
 
 #logging.basicConfig(level=logging.DEBUG)
