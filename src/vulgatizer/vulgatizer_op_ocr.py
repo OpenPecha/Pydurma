@@ -1,6 +1,5 @@
 import json
 import logging
-from horology import timed
 
 from openpecha.core.ids import get_uuid
 from openpecha.core.layer import LayerEnum

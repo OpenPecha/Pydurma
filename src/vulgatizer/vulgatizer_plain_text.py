@@ -2,7 +2,6 @@ import json
 import logging
 
 from pathlib import Path
-from horology import timed
 
 from openpecha.core.ids import get_base_id, get_uuid
 from openpecha.core.pecha import OpenPecha
