@@ -77,7 +77,7 @@ class OPCursor:
         self.coord = coord
         self.last_page_start = 0
 
-    def append_token(self, token: Token, token_confidence: int):
+    def append_token(self, token: Token, token_confidence: int=None):
         if not token or not token[3]:
             return
         self.base += token[3]
