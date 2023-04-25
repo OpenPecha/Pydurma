@@ -1,1 +1,1 @@
-BO_SYLLIST_PATH = './src/vulgatizer/bo/syllist.resource'
+BO_SYLLIST_PATH = './res/bo/syllist.txt'
