@@ -25,6 +25,10 @@ dependencies = [
     "numpy==1.24.2"
 ]
 
+
+[tool.setuptools.package-data]
+vulgatizer = ["*.txt"]
+
 [project.optional-dependencies]
 dev = [
     "pytest",
