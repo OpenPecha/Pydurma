@@ -27,7 +27,7 @@ dependencies = [
 
 
 [tool.setuptools.package-data]
-vulgatizer = ["*.txt"]
+vulgatizer = ["res/bo/*.txt"]
 
 [project.optional-dependencies]
 dev = [
