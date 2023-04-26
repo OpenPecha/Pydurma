@@ -4,10 +4,10 @@ import regex
 
 from typing import Tuple
 
-from vulgatizer.normalizer import Normalizer
-from vulgatizer.bo.normalizer_bo import TibetanNormalizer
-from vulgatizer.tokenizer import Tokenizer, TokenList
-from vulgatizer.vocabulary import Vocabulary
+from CommonSpell.normalizer import Normalizer
+from CommonSpell.bo.normalizer_bo import TibetanNormalizer
+from CommonSpell.tokenizer import Tokenizer, TokenList
+from CommonSpell.vocabulary import Vocabulary
 
 class TibetanTokenizer(Tokenizer):
 

@@ -1,6 +1,6 @@
 import re
 
-from vulgatizer.normalizer import Normalizer
+from CommonSpell.normalizer import Normalizer
 
 class GenericNormalizer(Normalizer):
 

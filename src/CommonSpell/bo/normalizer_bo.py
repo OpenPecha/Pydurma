@@ -1,8 +1,8 @@
 import re
 from enum import Enum
 
-from vulgatizer import config
-from vulgatizer.normalizer import Normalizer
+from CommonSpell import config
+from CommonSpell.normalizer import Normalizer
 
 
 class Cats(Enum):

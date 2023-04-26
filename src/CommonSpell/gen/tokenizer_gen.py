@@ -2,9 +2,9 @@ from typing import List, Tuple
 
 import regex
 
-from vulgatizer.normalizer import Normalizer
-from vulgatizer.tokenizer import Token, Tokenizer, TokenList
-from vulgatizer.vocabulary import Vocabulary
+from CommonSpell.normalizer import Normalizer
+from CommonSpell.tokenizer import Token, Tokenizer, TokenList
+from CommonSpell.vocabulary import Vocabulary
 
 
 class GenericTokenizer(Tokenizer):

@@ -3,9 +3,9 @@ from typing import List
 from openpecha.core.layer import Layer, LayerEnum, PechaMetadata
 from openpecha.core.annotations import OCRConfidence, BaseAnnotation
 
-from vulgatizer.tokenizer import Token
-from vulgatizer.utils.opf_utils import OPSegment, OPFragmentLayerAccessor
-from vulgatizer.weighers.token_weigher import TokenWeigher
+from CommonSpell.tokenizer import Token
+from CommonSpell.utils.opf_utils import OPSegment, OPFragmentLayerAccessor
+from CommonSpell.weighers.token_weigher import TokenWeigher
 
 
 class OPConfidenceTokenWeigher(TokenWeigher):

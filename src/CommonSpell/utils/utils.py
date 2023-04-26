@@ -1,9 +1,9 @@
 import logging
 from typing import List
 
-from vulgatizer.tokenizer import Token
-from vulgatizer.vocabulary import Vocabulary
-from vulgatizer.vulgaligners.vulgaligner import TokenMatrix
+from CommonSpell.tokenizer import Token
+from CommonSpell.vocabulary import Vocabulary
+from CommonSpell.vulgaligners.vulgaligner import TokenMatrix
 
 
 def token_row_to_text_row(

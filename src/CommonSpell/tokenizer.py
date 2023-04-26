@@ -1,7 +1,7 @@
 from typing import Tuple, List
 
-from vulgatizer.normalizer import Normalizer
-from vulgatizer.vocabulary import Vocabulary
+from CommonSpell.normalizer import Normalizer
+from CommonSpell.vocabulary import Vocabulary
 
 Token = Tuple[int, int, int, str]
 TokenList = List[Token]

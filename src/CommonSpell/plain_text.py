@@ -5,23 +5,23 @@ from pathlib import Path
 
 from openpecha.core.ids import get_base_id, get_uuid
 from openpecha.core.pecha import OpenPecha
-from vulgatizer.bo.normalizer_bo import TibetanNormalizer
-from vulgatizer.bo.tokenizer_bo import TibetanTokenizer
-from vulgatizer.utils.opf_utils import OPCursor
-from vulgatizer.utils.utils import (
+from CommonSpell.bo.normalizer_bo import TibetanNormalizer
+from CommonSpell.bo.tokenizer_bo import TibetanTokenizer
+from CommonSpell.utils.opf_utils import OPCursor
+from CommonSpell.utils.utils import (
     debug_token_lists,
     debug_token_matrix,
     debug_token_strings,
 )
-from vulgatizer.vocabulary import Vocabulary
-from vulgatizer.vulgaligners.vulgaligner_fdmp import FDMPVulgaligner
-from vulgatizer.weighers.matrix_weigher import TokenMatrixWeigher
-from vulgatizer.weighers.token_weigher_count import TokenCountWeigher
-from vulgatizer.weighers.token_weigher_valid_bo import ValidBoTokenWeigher
+from CommonSpell.vocabulary import Vocabulary
+from CommonSpell.vulgaligners.vulgaligner_fdmp import FDMPVulgaligner
+from CommonSpell.weighers.matrix_weigher import TokenMatrixWeigher
+from CommonSpell.weighers.token_weigher_count import TokenCountWeigher
+from CommonSpell.weighers.token_weigher_valid_bo import ValidBoTokenWeigher
 
-logger = logging.getLogger("VulgatizerOPTibOCR")
+logger = logging.getLogger("PlainTextCommonSpeller")
 
-class VulgatizerPlainText():
+class PlainTextCommonSpeller():
 
     def __init__(self, op_output: OpenPecha) -> None:
         self.vocabulary = Vocabulary()

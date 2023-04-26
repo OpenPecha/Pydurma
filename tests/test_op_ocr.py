@@ -3,8 +3,8 @@ from pathlib import Path
 
 from openpecha.core.pecha import OpenPechaFS
 
-from vulgatizer.vulgatizer_op_ocr import VulgatizerOPTibOCR
-from vulgatizer.vulgatizer_plain_text import VulgatizerPlainText
+from CommonSpell.opf import OpfCommonSpeller
+from CommonSpell.plain_text import PlainTextCommonSpeller
 
 
 
@@ -17,7 +17,7 @@ from vulgatizer.vulgatizer_plain_text import VulgatizerPlainText
 
 def test_vulgatizer_op():
 	op_output = OpenPechaFS("./data/vulgate/I9B2646BE.opf")
-	vulgatizer = VulgatizerOPTibOCR(op_output)
+	vulgatizer = OpfCommonSpeller(op_output)
 
 	vulgatizer.add_op_witness(OpenPechaFS("./data/I0001/I0001.opf"))
 	vulgatizer.add_op_witness(OpenPechaFS("./data/I0002/I0002.opf"))
@@ -30,7 +30,7 @@ def test_vulgatizer_op():
 
 def test_vulgatizer_plain_text():
 	op_output = OpenPechaFS("./data/vulgate/I9B2646B7.opf")
-	vulgatizer = VulgatizerPlainText(op_output)
+	vulgatizer = PlainTextCommonSpeller(op_output)
 	vulgatizer.add_witness(Path("./data/I0001/I0001.opf/base/95E3.txt"))
 	vulgatizer.add_witness(Path("./data/I0002/I0002.opf/base/95E3.txt"))
 	vulgatizer.add_witness(Path("./data/I0003/I0003.opf/base/95E3.txt"))

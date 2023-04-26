@@ -1,8 +1,8 @@
 from typing import List, Tuple
 
-from vulgatizer.tokenizer import Token
-from vulgatizer.vulgaligners.vulgaligner import TokenMatrix
-from vulgatizer.weighers.token_weigher import TokenWeigher
+from CommonSpell.tokenizer import Token
+from CommonSpell.vulgaligners.vulgaligner import TokenMatrix
+from CommonSpell.weighers.token_weigher import TokenWeigher
 
 WeightedWeights = Tuple[List[int], int]
 WeightedWeighers = Tuple[TokenWeigher, int]

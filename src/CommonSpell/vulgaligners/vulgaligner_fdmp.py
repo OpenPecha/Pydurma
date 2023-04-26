@@ -4,9 +4,9 @@ from fast_diff_match_patch import diff
 from numpy import array
 from typing import Tuple, List
 
-from vulgatizer.vulgaligners.vulgaligner import TokenMatrix
-from vulgatizer.tokenizer import TokenList
-from vulgatizer.utils.utils import *
+from CommonSpell.vulgaligners.vulgaligner import TokenMatrix
+from CommonSpell.tokenizer import TokenList
+from CommonSpell.utils.utils import *
 
 # a diff returned by fdmp is a tuple with two values:
 # - a character: '=', '-' or '+' with self-evident signification
