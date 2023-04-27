@@ -68,7 +68,6 @@ class PlainTextCommonSpeller():
     def append_segments(self, segments, op_cursor):
         token_strings = []
         token_lists = []
-        confidence_layer_accessors = []
         cur_page_vulga_report = {}
         for segment in segments:
             token_list, token_string = self.tokenizer.tokenize(segment)

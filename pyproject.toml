@@ -27,7 +27,7 @@ dependencies = [
 
 
 [tool.setuptools.package-data]
-vulgatizer = ["res/bo/*.txt"]
+CommonSpell = ["res/bo/*.txt"]
 
 [project.optional-dependencies]
 dev = [
