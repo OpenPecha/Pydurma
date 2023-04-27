@@ -129,9 +129,10 @@ class PlainTextCommonSpeller():
         except:
             logging.exception("exception in text %s", text_path.stem)
         cursor.flush()
-        self.op_output.save_base()
-        self.op_output.save_layers()
-        cur_base_vulga_report['witness_mapping'] = {}
-        self.save_vulga_report(vulga_report_path, cur_base_vulga_report, base_id)
+        # self.op_output.save_base()
+        # self.op_output.save_layers()
+        # cur_base_vulga_report['witness_mapping'] = {}
+        # self.save_vulga_report(vulga_report_path, cur_base_vulga_report, base_id)
+        return self.op_output
             
 
