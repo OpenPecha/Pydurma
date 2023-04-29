@@ -38,7 +38,9 @@ Requests for work (RFWs) and requests for comments (RFCs) associated with this p
 
 ## Project description
 
-With _OpenPecha Project Template_ you can have a project with automatic code quality checker setup for you.
+
+![image](https://user-images.githubusercontent.com/24893704/235310774-ecbea57f-cae9-45e5-9385-95b07760a762.png)
+
 
 ## Who this project is for
 
