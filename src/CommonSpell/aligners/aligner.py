@@ -1,10 +1,9 @@
-from typing import List
-
+from typing import List,Dict
 from CommonSpell.tokenizer import TokenList
 
 TokenMatrix = List[TokenList]
 
-class Vulgaligner():
+class Aligner():
     """
     Aligner interface used in Vulgalizer.
     """
@@ -20,4 +19,4 @@ class Vulgaligner():
         It returns an alignment matrix in the form of a matrix of tokens, one column per witness.
         Gaps in the matrix have the value None.
         """
-        return None
+        return None 

@@ -2,9 +2,9 @@ from typing import List, Dict, Tuple
 
 GAP_ELEMENT = ''
 
-class Vocabulary(object):
+class Encoder(object):
     """
-    Simple vocabulary class. A vocabulary just assigns integers to tokens (in our case strings).
+    Simple encoder class. A encoder just assigns integers to tokens (in our case strings).
     This significantly speeds up operations and allows working at the token level instead of
     character level.
     """
@@ -59,12 +59,12 @@ class Vocabulary(object):
 
     def decode(self, code: int) -> str:
         if not self.allow_decode:
-            raise KeyError('vocabulary does not allow decoding')
+            raise KeyError('encoder does not allow decoding')
         try:
             return self.codeToElement[code]
         except KeyError:
             raise KeyError(
-                'there is no elements in the vocabulary encoded as %d' % code)
+                'there is no elements in the encoder encoded as %d' % code)
 
     def decode_string(self, s: str, separator="|"):
         res = separator

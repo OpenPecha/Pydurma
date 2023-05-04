@@ -1,8 +1,8 @@
 import logging
 
 from CommonSpell.gen.tokenizer_gen import GenericTokenizer
-from CommonSpell.vocabulary import Vocabulary
-from CommonSpell.vulgaligners.vulgaligner_fdmp import FDMPVulgaligner
+from CommonSpell.encoder import Encoder
+from CommonSpell.aligners.fdmp import FDMPaligner
 from CommonSpell.gen.normalizer_gen import GenericNormalizer
 from CommonSpell.utils.utils import *
 
@@ -11,16 +11,16 @@ from CommonSpell.utils.utils import *
 
 def test_cmp_to_rows(strings, stop_words = []):
     normalizer = GenericNormalizer()
-    vocabulary = Vocabulary()
-    tokenizer = GenericTokenizer(vocabulary, normalizer, stop_words)
+    encoder = Encoder()
+    tokenizer = GenericTokenizer(encoder, normalizer, stop_words)
     token_lists = []
     token_strings = []
     for string in strings:
         tokens, tokenstr = tokenizer.tokenize(string)
-        #print(vocabulary.decode_string(other_tokenstr))
+        #print(encoder.decode_string(other_tokenstr))
         token_lists.append(tokens)
         token_strings.append(tokenstr)
-    aligner = FDMPVulgaligner()
+    aligner = FDMPaligner()
     matrix = aligner.get_alignment_matrix(token_strings, token_lists)
     return column_matrix_to_row_matrix(matrix)
 
@@ -100,12 +100,16 @@ def test_simple():
     test_rows(strings, expected, ["the"])
 
 def test_complex():
-    aligner = FDMPVulgaligner()
-    token_strings = ["ABC", "AC"]
-    token_lists = [
-        [(0,1,2,"AB"), (1,2,1,"C")],
-        [(0,1,1,"A"), (1,2,1,"C")]
-    ]
+    aligner = FDMPaligner()
+    token_strings = {
+        'V1':"ABC",
+        'V2': "AC"
+    } 
+    token_lists = {
+        'V1': [(0,1,2,"AB"), (1,2,1,"C")],
+        'V2': [(0,1,1,"A"), (1,2,1,"C")]
+    }
+        
     matrix = aligner.get_alignment_matrix(token_strings, token_lists)
     row_matrix = column_matrix_to_row_matrix(matrix)
     expected_row_matrix = [
