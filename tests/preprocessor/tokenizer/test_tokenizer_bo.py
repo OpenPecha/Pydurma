@@ -29,12 +29,13 @@ if __name__ == "__main__":
     tokenizer = TibetanTokenizer(encoder=encoder, normalizer=normalizer)
     
     test_strings = [
-        'བཀྲ་ཤིས་ཀུད་གྱི་བཀྲ་ཤིས་པ།'
+        'བཀྲ་ཤིས་ཀུན་གྱི་བཀྲ་ཤིས་པ།',
+        'བཀྲ་ཤིས་ཀུད་གྱི་བཀྲ་ཤིས་པ།',
+        'བཀྲ་ཤིས་ཀུན་ཀྱི་བཀྲ་ཤིས་པ།'
     ]
-    for test_string in test_strings:
+    for index, test_string in enumerate(test_strings, 1):
         token_list, token_str = tokenizer.tokenize(test_string)
-        print(token_str)
-        print(token_list)
+        print(f'{index} {token_str}')
         
 
     

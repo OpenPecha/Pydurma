@@ -1,4 +1,6 @@
+from pathlib import Path
 from CommonSpell.aligners.fdmp import FDMPaligner
+
 
 
 
@@ -6,8 +8,8 @@ def test_fdmp_aligner():
 
     token_strings = [
         '+,-.+,/',
-        '+,-.+,/',
-        '+,-+,.'
+        '+,0.+,/',
+        '+,-+,/'
     ]
     token_lists = [
         [(0, 4, 1, 'བཀྲ་'), (4, 8, 1, 'ཤིས་'), (8, 12, 1, 'ཀུན་'), (12, 16, 1, 'གྱི་'), (16, 20, 1, 'བཀྲ་'), (20, 24, 1, 'ཤིས་'), (24, 25, 0, 'པ'), (25, 26, 1, '།')],
@@ -31,4 +33,5 @@ def test_fdmp_aligner():
     token_matrix = aligner.get_alignment_matrix(token_strings, token_lists)
     assert expected_matrix == token_matrix
     
+
 
