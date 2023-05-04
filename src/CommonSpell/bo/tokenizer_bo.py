@@ -13,13 +13,13 @@ class TibetanTokenizer(Tokenizer):
 
     token_pattern = regex.compile(r'(?u)\w+[\s་༌࿒]*|\W+')
     
-    default_stop_words = [ "ཏུ", "གི", "ཀྱི", "གིས", "ཀྱིས", "ཡིས", 
-        "ཀྱང", "སྟེ", "ཏེ", "མམ", "རམ", "སམ", "ཏམ", "ནོ", "ཏོ", "གིན",
-        "ཀྱིན", "གྱིན", "ཅིང", "ཅིག", "ཅེས", "ཞེས", "པ", "པར", "པས",
-        "བ", "བར", "བས", "པོ", "པོར", "པོས", "བོ", "བོར", "བོས"]
+    # default_stop_words = [ "ཏུ", "གི", "ཀྱི", "གིས", "ཀྱིས", "ཡིས", 
+    #     "ཀྱང", "སྟེ", "ཏེ", "མམ", "རམ", "སམ", "ཏམ", "ནོ", "ཏོ", "གིན",
+    #     "ཀྱིན", "གྱིན", "ཅིང", "ཅིག", "ཅེས", "ཞེས", "པ", "པར", "པས",
+    #     "བ", "བར", "བས", "པོ", "པོར", "པོས", "བོ", "བོར", "བོས"]
 
-    def __init__(self, encoder: Encoder, normalizer: Normalizer, stop_words = default_stop_words):
-        super().__init__(encoder, normalizer, stop_words)
+    def __init__(self, encoder: Encoder, normalizer: Normalizer):
+        super().__init__(encoder, normalizer)
 
     def tokenize(self, s: str, start=0, end: int=None) -> Tuple[str, TokenList]:
         tokens = []
@@ -28,8 +28,8 @@ class TibetanTokenizer(Tokenizer):
             end = len(s)
         for m in TibetanTokenizer.token_pattern.finditer(s, start, end):
             token_s = self.normalizer.normalize_always(m.group(0))
-            compare_s = self.normalizer.normalize_pre_token_comparison(token_s)
-            if token_s == "" or compare_s in self.stop_words:
+            # compare_s = self.normalizer.normalize_pre_token_comparison(token_s)
+            if token_s == "":
                 t = (m.start(), m.end(), 0, token_s)
                 tokens.append(t)
                 continue

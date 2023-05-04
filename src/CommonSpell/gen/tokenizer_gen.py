@@ -16,9 +16,9 @@ class GenericTokenizer(Tokenizer):
     word_punctuation_pattern = regex.compile(r"(?u)\w+\s*|\W+")
 
     def __init__(
-        self, encoder: Encoder, normalizer: Normalizer, stop_words: List[str] = []
+        self, encoder: Encoder, normalizer: Normalizer
     ):
-        super().__init__(encoder, normalizer, stop_words)
+        super().__init__(encoder, normalizer)
 
     def tokenize(self, s: str, start=0, end: int = None) -> Tuple[str, TokenList]:
         tokens = []
@@ -27,8 +27,8 @@ class GenericTokenizer(Tokenizer):
             end = len(s)
         for m in GenericTokenizer.word_punctuation_pattern.finditer(s, start, end):
             token_s = self.normalizer.normalize_always(m.group(0))
-            compare_s = self.normalizer.normalize_pre_token_comparison(token_s)
-            if token_s == "" or compare_s in self.stop_words:
+            # compare_s = self.normalizer.normalize_pre_token_comparison(token_s)
+            if token_s == "":
                 t: Token = (m.start(), m.end(), 0, token_s)
                 tokens.append(t)
                 continue

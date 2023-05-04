@@ -11,10 +11,9 @@ class Tokenizer():
     Tokenizer class used in Vulgalizer.
     """
 
-    def __init__(self, encoder: Encoder, normalizer: Normalizer, stop_words: List[str] = []):
+    def __init__(self, encoder: Encoder, normalizer: Normalizer):
         self.encoder = encoder
         self.normalizer = normalizer
-        self.stop_words = stop_words
 
     def reset(self):
         self.encoder.reset()
