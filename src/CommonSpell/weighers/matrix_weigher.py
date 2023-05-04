@@ -98,7 +98,6 @@ class TokenMatrixWeigher:
 
         TODO: TokenMatrix and this matrix should probably instead by numpy arrays.
         """
-        token_matrix = token_matrix[1:]
         nb_rows = len(token_matrix)
         nb_columns = len(token_matrix[0])
         if len(self.weighted_weighters) == 0:

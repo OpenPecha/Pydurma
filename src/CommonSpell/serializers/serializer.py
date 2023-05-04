@@ -15,10 +15,22 @@ class Serializer:
     
     def get_weighted_matix(self):
         for weigher in self.weighers:
-            self.token_matrix_weigher.add_weigher(weigher)
+            self.token_matrix_weigher.add_weigher(weigher, 1)
         weighed_matrix = self.token_matrix_weigher.get_weight_matrix(self.token_matrix)
         return weighed_matrix
     
+    def get_top_weight_index(self, weights):
+        top_weight = 0
+        top_token_index = 0
+        for j, weight in enumerate(weights):
+            if weight is not None and weight > top_weight:
+                top_weight = weight
+                top_token_index = j
+        return top_token_index
+    
     
     def serialize_matrix(self, weighted_matrix: WeightMatrix):
+        return None
+    
+    def save_serialized_matrix(self, serialized_matrix):
         return None

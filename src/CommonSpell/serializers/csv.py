@@ -28,19 +28,21 @@ class CSVSerializer(Serializer):
         return token_entry
 
     def serialize_matrix(self, weighted_matrix: WeightMatrix):
+            serialized_matrix = []
+            for row_i, tokens in enumerate(self.token_matrix):
+                top_token_index = 0
+                weights = weighted_matrix[row_i]
+                top_token_index = self.get_top_weight_index(weights)
+                token_entry = self.get_token_entry(tokens, weights, top_token_index)
+                serialized_matrix.append(token_entry)
+            return serialized_matrix
+
+    def save_serializer_matrix(self, serialized_matrix):
         output_file_path = self.output_dir / "common_spell.csv"
         with open(output_file_path, 'w', newline='') as csv_file:
             csv_writter = csv.writer(csv_file)
-            for row_i, tokens in enumerate(self.token_matrix):
-                top_weight = 0
-                top_token_index = 0
-                weights = weighted_matrix[row_i]
-                for j, weight in enumerate(weights):
-                    if weight is not None and weight > top_weight:
-                        top_weight = weight
-                        top_token_index = j
-                token_entry = self.get_token_entry(tokens, weight, top_token_index)
-                csv_writter.writerow(token_entry)
+            csv_writter.writerows(serialized_matrix)
+        return output_file_path
 
 
 
