@@ -33,7 +33,10 @@ class Serializer:
     def get_token_strings(self, tokens):
         token_strings = {}
         for version_index, token in enumerate(tokens,1):
-            token_strings[f'V{version_index}'] = token[3]
+            try:
+                token_strings[f'V{version_index}'] = token[3]
+            except:
+                token_strings[f'V{version_index}'] = ''
         return token_strings
     
     def is_diff_token(self, tokens):

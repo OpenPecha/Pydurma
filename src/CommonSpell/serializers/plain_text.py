@@ -17,7 +17,10 @@ class PlainTextSerializer(Serializer):
         serialized_matrix = ''
         for tokens, weights in zip(self.token_matrix, weighted_matrix):
             top_token_index = self.get_top_weight_index(weights)
-            voted_token = tokens[top_token_index][3]
+            try:
+                voted_token = tokens[top_token_index][3]
+            except:
+                voted_token = ''
             serialized_matrix += voted_token
         return serialized_matrix
     

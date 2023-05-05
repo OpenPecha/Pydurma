@@ -35,7 +35,10 @@ class MdSerializer(Serializer):
         serialized_matrix_md = ''
         for tokens, weights in zip(self.token_matrix, weighted_matrix):
             top_token_index = self.get_top_weight_index(weights)
-            voted_token = tokens[top_token_index][3]
+            try:
+                voted_token = tokens[top_token_index][3]
+            except:
+                voted_token = ''
             if self.is_diff_token(tokens):
                 serialized_body_text_md += f'{voted_token}[^{diff_note_walker}]'
                 footnote_text = self.get_footnote_text(tokens, voted_token)
