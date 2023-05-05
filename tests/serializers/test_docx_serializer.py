@@ -1,11 +1,13 @@
+import tempfile
 from pathlib import Path
 
-from CommonSpell.serializers.md import MdSerializer
+
+from CommonSpell.serializers.docx import DocxSerializer
 from CommonSpell.weighers.matrix_weigher import TokenMatrixWeigher
 from CommonSpell.weighers.token_weigher_count import TokenCountWeigher
 
 
-def test_md_serializer():
+def test_docx_serializer():
     token_matrix = [
         [(0, 4, 1, 'བཀྲ་'), (0, 4, 1, 'བཀྲ་'), (0, 4, 1, 'བཀྲ་')],
         [(4, 8, 1, 'ཤིས་'), (4, 8, 1, 'ཤིས་'), (4, 8, 1, 'ཤིས་')],
@@ -18,17 +20,16 @@ def test_md_serializer():
     ]
     tokenMatrixWeigher = TokenMatrixWeigher()
     weighers = [TokenCountWeigher()]
-    expected_serialized_matrix = """བཀྲ་ཤིས་ཀུད་[^1]གྱི་[^2]བཀྲ་ཤིས་པའི[^3]།
+    
 
-[^1]: ཀུད་]V1: ཀུན་; V2,V3: ཀུད་;
-[^2]: གྱི་]V1,V2: གྱི་; V3: ཀྱི་;
-[^3]: པའི]V1,V2: པའི; V3: པས;
-"""
+    with tempfile.TemporaryDirectory() as temp_dir:
+        expected_serialized_matrix_path = Path(temp_dir) / 'common_spell.docx'
 
-    serializer = MdSerializer(token_matrix, tokenMatrixWeigher, weighers, output_dir=Path('tests/data/'))
-    weighted_matrix = serializer.get_weighted_matix()
-    serialized_matrix = serializer.serialize_matrix(weighted_matrix)
+        serializer = DocxSerializer(token_matrix, tokenMatrixWeigher, weighers, output_dir=Path(temp_dir))
+        weighted_matrix = serializer.get_weighted_matix()
+        serialized_matrix_md = serializer.serialize_matrix(weighted_matrix)
+        serialized_matrix_path = serializer.save_serialized_matrix(serialized_matrix_md)
 
-    assert serialized_matrix == expected_serialized_matrix
 
-test_md_serializer()
+        assert serialized_matrix_path == expected_serialized_matrix_path
+

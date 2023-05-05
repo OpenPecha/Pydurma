@@ -28,8 +28,6 @@ class MdSerializer(Serializer):
             note_text += f"{version_names}: {diff_string}; "
         return note_text[:-1]
         
-
-    
     def serialize_matrix(self, weighted_matrix: WeightMatrix):
         diff_note_walker = 1
         serialized_body_text_md = ''
@@ -45,7 +43,7 @@ class MdSerializer(Serializer):
                 diff_note_walker += 1
             else:
                 serialized_body_text_md += voted_token
-        serialized_matrix_md = f'{serialized_body_text_md}\n{serialized_footnote_text_md}'
+        serialized_matrix_md = f'{serialized_body_text_md}\n\n{serialized_footnote_text_md}'
         return serialized_matrix_md
     
     def save_serialized_matrix(self, serialized_matrix_md):

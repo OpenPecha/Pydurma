@@ -1,4 +1,6 @@
+from pathlib import Path
 from typing import List
+
 
 from CommonSpell.aligners.aligner import TokenMatrix
 from CommonSpell.weighers.matrix_weigher import TokenMatrixWeigher, WeightMatrix
@@ -6,7 +8,7 @@ from CommonSpell.weighers.token_weigher import TokenWeigher
 
 class Serializer:
 
-    def __init__(self, token_matrix: TokenMatrix, tokenMatrixWeigher: TokenMatrixWeigher, weighers: List[TokenWeigher], output_dir) -> None:
+    def __init__(self, token_matrix: TokenMatrix, tokenMatrixWeigher: TokenMatrixWeigher, weighers: List[TokenWeigher], output_dir: Path) -> None:
         self.token_matrix = token_matrix
         self.token_matrix_weigher = tokenMatrixWeigher
         self.weighers = weighers

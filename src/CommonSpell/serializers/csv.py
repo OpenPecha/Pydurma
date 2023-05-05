@@ -1,7 +1,8 @@
 import csv
+from pathlib import Path
 from typing import List
-from CommonSpell.aligners.aligner import TokenMatrix
 
+from CommonSpell.aligners.aligner import TokenMatrix
 from CommonSpell.serializers.serializer import Serializer
 from CommonSpell.weighers.matrix_weigher import TokenMatrixWeigher, WeightMatrix
 from CommonSpell.weighers.token_weigher import TokenWeigher
@@ -10,7 +11,7 @@ from CommonSpell.weighers.token_weigher import TokenWeigher
 class CSVSerializer(Serializer):
 
 
-    def __init__(self, token_matrix: TokenMatrix, tokenMatrixWeigher: TokenMatrixWeigher, weighers: List[TokenWeigher], output_dir) -> None:
+    def __init__(self, token_matrix: TokenMatrix, tokenMatrixWeigher: TokenMatrixWeigher, weighers: List[TokenWeigher], output_dir: Path) -> None:
         super().__init__(token_matrix, tokenMatrixWeigher, weighers, output_dir)
 
 
