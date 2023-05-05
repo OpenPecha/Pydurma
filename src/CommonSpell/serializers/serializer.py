@@ -27,6 +27,18 @@ class Serializer:
                 top_weight = weight
                 top_token_index = j
         return top_token_index
+
+    def get_token_strings(self, tokens):
+        token_strings = {}
+        for version_index, token in enumerate(tokens,1):
+            token_strings[f'V{version_index}'] = token[3]
+        return token_strings
+    
+    def is_diff_token(self, tokens):
+        token_strings = self.get_token_strings(tokens)
+        if len(list(set(token_strings.values()))) == 1:
+            return False
+        return True
     
     
     def serialize_matrix(self, weighted_matrix: WeightMatrix):

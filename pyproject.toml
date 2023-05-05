@@ -19,10 +19,10 @@ classifiers = [
 ]
 
 dependencies = [
-    "stringcase ~=1.2.0",
-    "openpecha==0.9.23",
     "fast-diff-match-patch==2.0.1",
     "numpy==1.24.2"
+    "openpecha==0.9.23",
+    "pypandoc==0.1.11",
 ]
 
 

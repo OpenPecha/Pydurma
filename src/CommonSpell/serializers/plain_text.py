@@ -1,4 +1,3 @@
-import csv
 from typing import List
 from CommonSpell.aligners.aligner import TokenMatrix
 
@@ -15,9 +14,7 @@ class PlainTextSerializer(Serializer):
     
     def serialize_matrix(self, weighted_matrix: WeightMatrix):
         serialized_matrix = ''
-        for row_i, tokens in enumerate(self.token_matrix):
-            top_token_index = 0
-            weights = weighted_matrix[row_i]
+        for tokens, weights in zip(self.token_matrix, weighted_matrix):
             top_token_index = self.get_top_weight_index(weights)
             voted_token = tokens[top_token_index][3]
             serialized_matrix += voted_token

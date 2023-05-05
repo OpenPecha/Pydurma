@@ -29,9 +29,7 @@ class CSVSerializer(Serializer):
 
     def serialize_matrix(self, weighted_matrix: WeightMatrix):
             serialized_matrix = []
-            for row_i, tokens in enumerate(self.token_matrix):
-                top_token_index = 0
-                weights = weighted_matrix[row_i]
+            for tokens, weights in zip(self.token_matrix, weighted_matrix):
                 top_token_index = self.get_top_weight_index(weights)
                 token_entry = self.get_token_entry(tokens, weights, top_token_index)
                 serialized_matrix.append(token_entry)
