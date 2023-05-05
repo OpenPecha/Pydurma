@@ -1,7 +1,7 @@
 from typing import List, Tuple
 
 from CommonSpell.tokenizer import Token
-from CommonSpell.vulgaligners.vulgaligner import TokenMatrix
+from CommonSpell.aligners.aligner import TokenMatrix
 from CommonSpell.weighers.token_weigher import TokenWeigher
 
 WeightedWeights = Tuple[List[int], int]

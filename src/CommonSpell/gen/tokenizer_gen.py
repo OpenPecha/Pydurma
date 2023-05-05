@@ -4,7 +4,7 @@ import regex
 
 from CommonSpell.normalizer import Normalizer
 from CommonSpell.tokenizer import Token, Tokenizer, TokenList
-from CommonSpell.vocabulary import Vocabulary
+from CommonSpell.encoder import Encoder
 
 
 class GenericTokenizer(Tokenizer):
@@ -16,10 +16,9 @@ class GenericTokenizer(Tokenizer):
     word_punctuation_pattern = regex.compile(r"(?u)\w+\s*|\W+")
 
     def __init__(
-        self, vocabulary: Vocabulary, normalizer: Normalizer, stop_words: List[str] = []
+        self, encoder: Encoder, normalizer: Normalizer
     ):
-        super().__init__(vocabulary, normalizer)
-        self.stop_words = stop_words
+        super().__init__(encoder, normalizer)
 
     def tokenize(self, s: str, start=0, end: int = None) -> Tuple[str, TokenList]:
         tokens = []
@@ -28,13 +27,13 @@ class GenericTokenizer(Tokenizer):
             end = len(s)
         for m in GenericTokenizer.word_punctuation_pattern.finditer(s, start, end):
             token_s = self.normalizer.normalize_always(m.group(0))
-            compare_s = self.normalizer.normalize_pre_token_comparison(token_s)
-            if token_s == "" or compare_s in self.stop_words:
+            # compare_s = self.normalizer.normalize_pre_token_comparison(token_s)
+            if token_s == "":
                 t: Token = (m.start(), m.end(), 0, token_s)
                 tokens.append(t)
                 continue
             token_s_for_diff = self.normalizer.normalize_pre_token_diff(token_s)
-            code_str, code_str_len = self.vocabulary.encode_str(token_s_for_diff)
+            code_str, code_str_len = self.encoder.encode_str(token_s_for_diff)
             tokenstr += code_str
             t = (m.start(), m.end(), code_str_len, token_s)
             tokens.append(t)

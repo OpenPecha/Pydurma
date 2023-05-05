@@ -2,8 +2,8 @@ import logging
 from typing import List
 
 from CommonSpell.tokenizer import Token
-from CommonSpell.vocabulary import Vocabulary
-from CommonSpell.vulgaligners.vulgaligner import TokenMatrix
+from CommonSpell.encoder import Encoder
+from CommonSpell.aligners.aligner import TokenMatrix
 
 
 def token_row_to_text_row(
@@ -104,8 +104,8 @@ def debug_token_lists(logger, token_lists, string_list=None):
         logger.debug(row_string)
 
 
-def debug_token_strings(logger, token_strings: List[str], vocabulary: Vocabulary):
+def debug_token_strings(logger, token_strings: List[str], encoder: Encoder):
     if not logger.isEnabledFor(logging.DEBUG):
         return
     for token_string in token_strings:
-        print(vocabulary.decode_string(token_string))
+        print(encoder.decode_string(token_string))

@@ -1,10 +1,9 @@
 import logging
 
 from fast_diff_match_patch import diff
-from numpy import array
-from typing import Tuple, List
+from typing import Tuple, List, Dict
 
-from CommonSpell.vulgaligners.vulgaligner import TokenMatrix
+from CommonSpell.aligners.aligner import Aligner, TokenMatrix
 from CommonSpell.tokenizer import TokenList
 from CommonSpell.utils.utils import *
 
@@ -13,9 +12,9 @@ from CommonSpell.utils.utils import *
 # - an integer representing the number of characters
 FDMPDiff = Tuple[str,int]
 
-logger = logging.getLogger('FDMPVulgaligner')
+logger = logging.getLogger('FDMPaligner')
 
-class FDMPVulgaligner():
+class FDMPaligner(Aligner):
     """
     Aligner using the fast_diff_match_patch (fdmp) library
     """
@@ -190,8 +189,8 @@ class FDMPVulgaligner():
         logger.debug("fill_cells_per_base_tokens for nb_base_tokens=%d, nb_other_tokens=%d", len_base_tokens, len_other_tokens)
         diff_i = 0
         while diff_i < len(diffs):
-            #FDMPVulgaligner.assert_loop(diffs, diff_i, base_tokens, base_token_i, other_tokens, other_token_i)
-            minus_c, equal_c, plus_c, next_diff_i = FDMPVulgaligner.get_next_fdmp_diff_info(diffs, diff_i)
+            #FDMPaligner.assert_loop(diffs, diff_i, base_tokens, base_token_i, other_tokens, other_token_i)
+            minus_c, equal_c, plus_c, next_diff_i = FDMPaligner.get_next_fdmp_diff_info(diffs, diff_i)
             logger.debug("new iteration with (%d -, %d =, %d +)", minus_c, equal_c, plus_c)
             if minus_c > 0:
                 nb_base_ts_c = 0
@@ -289,8 +288,8 @@ class FDMPVulgaligner():
         logger.debug(cells_per_base_tokens)
         while diff_i < len(diffs):
             debug_token_matrix(logger, matrix)
-            FDMPVulgaligner.assert_loop(diffs, diff_i, base_tokens, base_token_i, other_tokens, other_token_i)
-            minus_c, equal_c, plus_c, next_diff_i = FDMPVulgaligner.get_next_fdmp_diff_info(diffs, diff_i)
+            FDMPaligner.assert_loop(diffs, diff_i, base_tokens, base_token_i, other_tokens, other_token_i)
+            minus_c, equal_c, plus_c, next_diff_i = FDMPaligner.get_next_fdmp_diff_info(diffs, diff_i)
             logger.debug("iteration with (%d -, %d =, %d +), matrix_row_i = %d/%d, other_token_i = %d/%d", minus_c, equal_c, plus_c, matrix_row_i, len_matrix, other_token_i, len_other_tokens)
             # at any point in time, the number of columns left in the matrix should be (by design)
             # higher or equal to the number of tokens left:
@@ -382,25 +381,27 @@ class FDMPVulgaligner():
         It returns an alignment matrix in the form of a matrix of tokens, one row per witness.
         Gaps in the matrix have the value None.
         """
+        matrix = []
         base_tokens = token_lists.pop(0)
         base_token_string = token_strings.pop(0)
-        FDMPVulgaligner.assert_tokens_correction(base_token_string, base_tokens)
+        FDMPaligner.assert_tokens_correction(base_token_string, base_tokens)
         cells_per_base_tokens = [1] * (len(base_tokens)+1)
         cells_per_base_tokens[0] = 0
         # compute the diffs with fdmp
         diff_lists = []
-        for i, other_token_string in enumerate(token_strings):
+        for token_index, other_token_string in enumerate(token_strings):
             diffs = diff(base_token_string, other_token_string, checklines=0, cleanup=None)
-            #FDMPVulgaligner.assert_diffs_correction(base_token_string, other_token_string, diffs)
+            #FDMPaligner.assert_diffs_correction(base_token_string, other_token_string, diffs)
             diff_lists.append(diffs)
-            other_tokens = token_lists[i]
-            #FDMPVulgaligner.assert_tokens_correction(other_token_string, other_tokens)
+            other_tokens = token_lists[token_index]
+            #FDMPaligner.assert_tokens_correction(other_token_string, other_tokens)
             # update cells_per_base_tokens
-            FDMPVulgaligner.fill_cells_per_base_tokens(base_tokens, other_tokens, diffs, cells_per_base_tokens)
+            FDMPaligner.fill_cells_per_base_tokens(base_tokens, other_tokens, diffs, cells_per_base_tokens)
+        
         # initialize the matrix:
         matrix = [[None for _ in range(len(token_lists)+1) ] for _ in range(sum(cells_per_base_tokens))]
         # special case for the first row corresponding to the base witness
-        FDMPVulgaligner.fill_base_column(matrix, base_tokens, cells_per_base_tokens)
-        for i, diffs in enumerate(diff_lists):
-            FDMPVulgaligner.fill_other_column(matrix, i+1, base_tokens, token_lists[i], diffs, cells_per_base_tokens)
+        FDMPaligner.fill_base_column(matrix, base_tokens, cells_per_base_tokens)
+        for version_index, diffs in enumerate(diff_lists):
+            FDMPaligner.fill_other_column(matrix, version_index+1, base_tokens, token_lists[version_index], diffs, cells_per_base_tokens)
         return matrix
