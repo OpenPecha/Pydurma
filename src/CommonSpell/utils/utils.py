@@ -1,7 +1,7 @@
 import logging
-from typing import List
+from typing import List, Dict
 
-from CommonSpell.tokenizer import Token
+from CommonSpell.tokenizer import Token, TokenList
 from CommonSpell.encoder import Encoder
 from CommonSpell.aligners.aligner import TokenMatrix
 
@@ -109,3 +109,18 @@ def debug_token_strings(logger, token_strings: List[str], encoder: Encoder):
         return
     for token_string in token_strings:
         print(encoder.decode_string(token_string))
+
+def get_token_strings(tokens: TokenList) -> Dict:
+    token_strings = {}
+    for version_index, token in enumerate(tokens,1):
+        try:
+            token_strings[f'V{version_index}'] = token[3]
+        except:
+                token_strings[f'V{version_index}'] = ''
+    return token_strings
+
+def is_diff_token(tokens: TokenList) -> bool: 
+    token_strings = get_token_strings(tokens)
+    if len(list(set(token_strings.values()))) == 1:
+        return False
+    return True

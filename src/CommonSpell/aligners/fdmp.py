@@ -4,6 +4,7 @@ from fast_diff_match_patch import diff
 from typing import Tuple, List, Dict
 
 from CommonSpell.aligners.aligner import Aligner, TokenMatrix
+from CommonSpell.aligners.post_processing_matrix import merge_consecutive_diff_tokens_entries
 from CommonSpell.tokenizer import TokenList
 from CommonSpell.utils.utils import *
 
@@ -404,4 +405,5 @@ class FDMPaligner(Aligner):
         FDMPaligner.fill_base_column(matrix, base_tokens, cells_per_base_tokens)
         for version_index, diffs in enumerate(diff_lists):
             FDMPaligner.fill_other_column(matrix, version_index+1, base_tokens, token_lists[version_index], diffs, cells_per_base_tokens)
+        matrix = merge_consecutive_diff_tokens_entries(matrix)
         return matrix
