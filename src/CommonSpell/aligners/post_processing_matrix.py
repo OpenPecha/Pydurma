@@ -28,8 +28,11 @@ def merge_consecutive_diff_tokens_entries(token_matrix):
     entry_walker = 1
     for tokens_entry in token_matrix[1:]:
         if is_consecutive_diff_token(prev_tokens_entry, tokens_entry):
-             tokens_entry = merge_consecutive_diff_tokens_entry(prev_tokens_entry, tokens_entry)
-             postprocessed_matrix[entry_walker-1] = tokens_entry
+            tokens_entry = merge_consecutive_diff_tokens_entry(prev_tokens_entry, tokens_entry)
+            postprocessed_matrix[entry_walker-1] = tokens_entry
+        elif None in tokens_entry:
+            tokens_entry = merge_consecutive_diff_tokens_entry(prev_tokens_entry, tokens_entry)
+            postprocessed_matrix[entry_walker-1] = tokens_entry
         else:
             postprocessed_matrix.append(tokens_entry)
             entry_walker += 1
