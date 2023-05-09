@@ -122,6 +122,6 @@ def test_complex():
     ]
     assert(row_matrix == expected_row_matrix)
 
-test_simple()
+# test_simple()
 #test_complex()
 
