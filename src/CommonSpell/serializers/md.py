@@ -5,6 +5,7 @@ from CommonSpell.aligners.aligner import TokenMatrix
 from CommonSpell.serializers.serializer import Serializer
 from CommonSpell.weighers.matrix_weigher import TokenMatrixWeigher, WeightMatrix
 from CommonSpell.weighers.token_weigher import TokenWeigher
+from CommonSpell.utils.utils import is_diff_token, get_token_strings
 
 
 
@@ -21,7 +22,7 @@ class MdSerializer(Serializer):
 
     def get_footnote_text(self, diff_tokens, voted_token):
         note_text = f'{voted_token}]'
-        diff_token_strings = self.get_token_strings(diff_tokens)
+        diff_token_strings = get_token_strings(diff_tokens)
         regrouped_notes = self.regroup_same_diffs(diff_token_strings)
         for diff_string, verions in regrouped_notes.items():
             version_names = ','.join(verions)
@@ -39,7 +40,7 @@ class MdSerializer(Serializer):
                 voted_token = tokens[top_token_index][3]
             except:
                 voted_token = ''
-            if self.is_diff_token(tokens):
+            if is_diff_token(tokens):
                 serialized_body_text_md += f'{voted_token}[^{diff_note_walker}]'
                 footnote_text = self.get_footnote_text(tokens, voted_token)
                 serialized_footnote_text_md += f"[^{diff_note_walker}]: {footnote_text}\n"
