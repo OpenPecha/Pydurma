@@ -36,7 +36,7 @@ class CSVSerializer(Serializer):
                 serialized_matrix.append(token_entry)
             return serialized_matrix
 
-    def save_serializer_matrix(self, serialized_matrix):
+    def save_serialized_matrix(self, serialized_matrix):
         output_file_path = self.output_dir / "common_spell.csv"
         with open(output_file_path, 'w', newline='') as csv_file:
             csv_writter = csv.writer(csv_file)
