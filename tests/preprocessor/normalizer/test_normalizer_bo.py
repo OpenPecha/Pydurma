@@ -1,6 +1,6 @@
 import pytest
 
-from CommonSpell.bo.normalizer_bo import assert_conv, remove_affixes
+from CommonSpell.bo.normalizer_bo import assert_conv, remove_affixes, normalize_punctuation
 
 
 def test_remove_affixes():
@@ -21,3 +21,10 @@ def test_normalize_unicode():
     assert_conv("\u0F0B\u0F7E", "\u0F0B\u0F7E", False)
     assert_conv("\u0f65\u0f99\u0f7a\u0f7a", "\u0f62\u0f99\u0f7b")
     assert_conv("\u0f01\u0f83", "\u0f01\u0f83")  # should be valid
+
+def test_normalize_punction():
+    test_string = "གི་ཚེ་རང་ཉིད༌ལས་རང་        ཉིད་སྐྱེ་ན་དེའི་ཚེ་རྒྱུའི། །གཏན་ཚིགས་དང། སྡོང་བུ་ཞེས་བྱ་བ་ནི་མྱུ་གུའི་མཁྲང་བར༌འགྱུར་བའ་།། །།ཉིད་སྐྱེ་ན་དེའི་ཚེ་རྒྱུའི། །གཏན་ཚིགས་དང།། །།"
+    expected_string = "གི་ཚེ་རང་ཉིད་ལས་རང་ཉིད་སྐྱེ་ན་དེའི་ཚེ་རྒྱུའི༎ གཏན་ཚིགས་དང་། སྡོང་བུ་ཞེས་བྱ་བ་ནི་མྱུ་གུའི་མཁྲང་བར་འགྱུར་བའ༎ ༎ ཉིད་སྐྱེ་ན་དེའི་ཚེ་རྒྱུའི༎ གཏན་ཚིགས་དང་༎ ༎"
+
+    normalized_text = normalize_punctuation(test_string)
+    assert expected_string == normalized_text

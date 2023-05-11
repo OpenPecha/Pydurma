@@ -647,6 +647,42 @@ def normalize_invalid_start_tokens(token):
 
 HAS_TIBETAN_RE = re.compile(r"[\u0f00-\u0fd8]")
 
+# Punction normalization
+import re
+
+def normalize_tsek(text):
+    text = text.replace("༌", "་")
+    return text
+
+def normalize_shad(text):
+    patterns = [
+        ("། །","༎ "),
+        ("༎༎","༎ ༎ "),
+        ("།༎ །","༎ ༎ "),
+        ("་།", "།"),
+        ("་༎", "༎"),
+        ("ང།","ང་།"),
+        ("ང༎", "ང་༎"),
+        ("  ", " ")
+        ]
+    text = text.replace("་།", "།")
+    for abnormal_pattern, standard_pattern in patterns:
+        text = re.sub(abnormal_pattern, standard_pattern, text)
+    text = text.replace("ང།","ང་།")
+
+    return text
+
+
+def normalize_space(text):
+    text = re.sub("་ +", "་", text)
+    return text
+
+def normalize_punctuation(text):
+    text = normalize_tsek(text)
+    text = normalize_space(text)
+    text = normalize_shad(text)
+    text = text.strip()
+    return text
 
 class TibetanNormalizer(Normalizer):
     def __init__(self, keep_eol=True, normalize_old_tib=False, normalize_semantic=True):
