@@ -20,9 +20,9 @@ def test_md_serializer():
     weighers = [TokenCountWeigher()]
     expected_serialized_matrix = """བཀྲ་ཤིས་ཀུད་[^1]གྱི་[^2]བཀྲ་ཤིས་པའི[^3]།
 
-[^1]: ཀུད་] V1: ཀུན་;
-[^2]: གྱི་] V3: ཀྱི་;
-[^3]: པའི] V3: པས;
+[^1]: ཀུད་]V1: ཀུན་; V2,V3: ཀུད་;
+[^2]: གྱི་]V1,V2: གྱི་; V3: ཀྱི་;
+[^3]: པའི]V1,V2: པའི; V3: པས;
 """
 
     serializer = MdSerializer(token_matrix, tokenMatrixWeigher, weighers, output_dir=Path('tests/data/'))
@@ -31,3 +31,4 @@ def test_md_serializer():
 
     assert serialized_matrix == expected_serialized_matrix
 
+test_md_serializer()

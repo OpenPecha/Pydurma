@@ -15,19 +15,13 @@ class PlainTextSerializer(Serializer):
     
     def serialize_matrix(self, weighted_matrix: WeightMatrix):
         serialized_matrix = ''
-        token_walker = 0
         for tokens, weights in zip(self.token_matrix, weighted_matrix):
             top_token_index = self.get_top_weight_index(weights)
             try:
                 voted_token = tokens[top_token_index][3]
             except:
                 voted_token = ''
-            if token_walker >= 100:
-                serialized_matrix += voted_token+"\n"
-                token_walker = 0
-            else:
-                serialized_matrix += voted_token
-            token_walker += 1
+            serialized_matrix += voted_token
         return serialized_matrix
     
     def save_serialized_matrix(self, serialized_matrix):

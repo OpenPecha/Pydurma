@@ -5,7 +5,7 @@ import regex
 from typing import Tuple
 
 from CommonSpell.normalizer import Normalizer
-from CommonSpell.bo.normalizer_bo import TibetanNormalizer, normalize_punctuation
+from CommonSpell.bo.normalizer_bo import TibetanNormalizer
 from CommonSpell.tokenizer import Tokenizer, TokenList
 from CommonSpell.encoder import Encoder
 
@@ -24,7 +24,6 @@ class TibetanTokenizer(Tokenizer):
     def tokenize(self, s: str, start=0, end: int=None) -> Tuple[str, TokenList]:
         tokens = []
         tokenstr = ""
-        s = normalize_punctuation(s)
         if end is None:
             end = len(s)
         for m in TibetanTokenizer.token_pattern.finditer(s, start, end):

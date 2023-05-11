@@ -19,7 +19,6 @@ class CommonSpeller():
         token_lists = []
         for version_path in self.version_paths:
             version_text = version_path.read_text(encoding='utf-8')
-            version_text = version_text.replace("\n", "")
             token_list, token_string = self.tokenizer.tokenize(version_text)
             token_strings.append(token_string)
             token_lists.append(token_list)
