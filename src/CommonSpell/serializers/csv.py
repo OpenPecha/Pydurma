@@ -1,18 +1,17 @@
 import csv
 from pathlib import Path
-from typing import List
 
 from CommonSpell.aligners.aligner import TokenMatrix
 from CommonSpell.serializers.serializer import Serializer
-from CommonSpell.weighers.matrix_weigher import TokenMatrixWeigher, WeightMatrix
-from CommonSpell.weighers.token_weigher import TokenWeigher
+from CommonSpell.weighers.matrix_weigher import WeightMatrix
+from CommonSpell.utils.utils import get_top_weight_index
 
 
 class CSVSerializer(Serializer):
 
 
-    def __init__(self, token_matrix: TokenMatrix, tokenMatrixWeigher: TokenMatrixWeigher, weighers: List[TokenWeigher], output_dir: Path) -> None:
-        super().__init__(token_matrix, tokenMatrixWeigher, weighers, output_dir)
+    def __init__(self, token_matrix: TokenMatrix, weighted_matrix:WeightMatrix, output_dir: Path) -> None:
+        super().__init__(token_matrix, weighted_matrix, output_dir)
 
 
     def get_token_entry(self, tokens, weights, top_token_index):
@@ -28,10 +27,10 @@ class CSVSerializer(Serializer):
                 token_entry.append(f"{token_string}_{weight}_")
         return token_entry
 
-    def serialize_matrix(self, weighted_matrix: WeightMatrix):
+    def serialize_matrix(self):
             serialized_matrix = []
-            for tokens, weights in zip(self.token_matrix, weighted_matrix):
-                top_token_index = self.get_top_weight_index(weights)
+            for tokens, weights in zip(self.token_matrix, self.weighted_matrix):
+                top_token_index = get_top_weight_index(weights)
                 token_entry = self.get_token_entry(tokens, weights, top_token_index)
                 serialized_matrix.append(token_entry)
             return serialized_matrix

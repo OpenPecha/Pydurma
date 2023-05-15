@@ -22,14 +22,17 @@ def test_docx_serializer():
     ]
     tokenMatrixWeigher = TokenMatrixWeigher()
     weighers = [TokenCountWeigher()]
+
+    for weigher in weighers:
+        tokenMatrixWeigher.add_weigher(weigher,weigher_weight=1)
+    weighted_matrix = tokenMatrixWeigher.get_weight_matrix(token_matrix)
     
 
     with tempfile.TemporaryDirectory() as temp_dir:
         expected_serialized_matrix_path = Path(temp_dir) / 'common_spell.docx'
 
-        serializer = DocxSerializer(token_matrix, tokenMatrixWeigher, weighers, output_dir=Path(temp_dir))
-        weighted_matrix = serializer.get_weighted_matix()
-        serialized_matrix_md = serializer.serialize_matrix(weighted_matrix)
+        serializer = DocxSerializer(token_matrix, token_matrix, output_dir=Path(temp_dir))
+        serialized_matrix_md = serializer.serialize_matrix()
         serialized_matrix_path = serializer.save_serialized_matrix(serialized_matrix_md)
 
 

@@ -1,37 +1,16 @@
 from pathlib import Path
-from typing import List
-
 
 from CommonSpell.aligners.aligner import TokenMatrix
-from CommonSpell.weighers.matrix_weigher import TokenMatrixWeigher, WeightMatrix
-from CommonSpell.weighers.token_weigher import TokenWeigher
+from CommonSpell.weighers.matrix_weigher import WeightMatrix
 
 class Serializer:
 
-    def __init__(self, token_matrix: TokenMatrix, tokenMatrixWeigher: TokenMatrixWeigher, weighers: List[TokenWeigher], output_dir: Path) -> None:
+    def __init__(self, token_matrix: TokenMatrix, weighted_matrix: WeightMatrix, output_dir: Path) -> None:
         self.token_matrix = token_matrix
-        self.token_matrix_weigher = tokenMatrixWeigher
-        self.weighers = weighers
+        self.weighted_matrix = weighted_matrix
         self.output_dir = output_dir
 
-    
-    def get_weighted_matix(self):
-        for weigher in self.weighers:
-            self.token_matrix_weigher.add_weigher(weigher, 1)
-        weighed_matrix = self.token_matrix_weigher.get_weight_matrix(self.token_matrix)
-        return weighed_matrix
-    
-    def get_top_weight_index(self, weights):
-        top_weight = 0
-        top_token_index = 0
-        for j, weight in enumerate(weights):
-            if weight is not None and weight > top_weight:
-                top_weight = weight
-                top_token_index = j
-        return top_token_index
-    
-    
-    def serialize_matrix(self, weighted_matrix: WeightMatrix):
+    def serialize_matrix(self):
         return None
     
     def save_serialized_matrix(self, serialized_matrix):

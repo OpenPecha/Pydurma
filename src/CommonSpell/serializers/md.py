@@ -3,16 +3,15 @@ from typing import List
 
 from CommonSpell.aligners.aligner import TokenMatrix
 from CommonSpell.serializers.serializer import Serializer
-from CommonSpell.weighers.matrix_weigher import TokenMatrixWeigher, WeightMatrix
-from CommonSpell.weighers.token_weigher import TokenWeigher
-from CommonSpell.utils.utils import is_diff_token, get_token_strings
+from CommonSpell.weighers.matrix_weigher import WeightMatrix
+from CommonSpell.utils.utils import is_diff_token, get_token_strings, get_top_weight_index
 
 
 
 class MdSerializer(Serializer):
 
-    def __init__(self, token_matrix: TokenMatrix, tokenMatrixWeigher: TokenMatrixWeigher, weighers: List[TokenWeigher], output_dir: Path) -> None:
-        super().__init__(token_matrix, tokenMatrixWeigher, weighers, output_dir)
+    def __init__(self, token_matrix: TokenMatrix, weighted_matrix: WeightMatrix, output_dir: Path) -> None:
+        super().__init__(token_matrix, weighted_matrix, output_dir)
 
     def regroup_same_diffs(self, diff_tokens):
         regrouped_notes = {}
@@ -29,13 +28,13 @@ class MdSerializer(Serializer):
             note_text += f"{version_names}: {diff_string}; "
         return note_text[:-1]
         
-    def serialize_matrix(self, weighted_matrix: WeightMatrix):
+    def serialize_matrix(self):
         diff_note_walker = 1
         serialized_body_text_md = ''
         serialized_footnote_text_md = ''
         serialized_matrix_md = ''
-        for tokens, weights in zip(self.token_matrix, weighted_matrix):
-            top_token_index = self.get_top_weight_index(weights)
+        for tokens, weights in zip(self.token_matrix, self.weighted_matrix):
+            top_token_index = get_top_weight_index(weights)
             try:
                 voted_token = tokens[top_token_index][3]
             except:

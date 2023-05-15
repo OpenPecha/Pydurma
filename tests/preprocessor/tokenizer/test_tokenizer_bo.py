@@ -29,9 +29,9 @@ def test_tokenizer_bo():
 #     tokenizer = TibetanTokenizer(encoder=encoder, normalizer=normalizer)
     
 #     test_strings = [
-#         'བཀྲ་ཤིས་ཀུན་གྱི་བཀྲ་ཤིས་པ།',
-#         'བཀྲ་ཤིས་ཀུད་གྱི་བཀྲ་ཤིས་པ།',
-#         'བཀྲ་ཤིས་ཀུན་ཀྱི་བཀྲ་ཤིས་པ།'
+#         '༄༅། །རིགས་པ་བསྟན་པར་བྱ་བའི་ཕྱིར། དེ་ཉིད་ཀྱི་བཀྲ་ཤིས་ཀུན་གྱི་བཀྲ་ཤིས་པ།',
+#         'རིགས་པ་བསྟན་པར་བྱ་བའི་ཕྱིར། དེ་ཉིད་ཀྱི་བཀྲ་ཤིས་ཀུད་གྱི་བཀྲ་ཤིས་པ།',
+#         'རིག་པ་བསྟན་པར་དེ་ཉིད་ཀྱི་བཀྲ་ཤིས་ཀུན་ཀྱི་བཀྲ་ཤིས་པ།'
 #     ]
 #     for index, test_string in enumerate(test_strings, 1):
 #         token_list, token_str = tokenizer.tokenize(test_string)

@@ -116,7 +116,7 @@ def get_token_strings(tokens: TokenList) -> Dict:
         try:
             token_strings[f'V{version_index}'] = token[3]
         except:
-                token_strings[f'V{version_index}'] = ''
+            token_strings[f'V{version_index}'] = ''
     return token_strings
 
 def is_diff_token(tokens: TokenList) -> bool: 
@@ -124,3 +124,13 @@ def is_diff_token(tokens: TokenList) -> bool:
     if len(list(set(token_strings.values()))) == 1:
         return False
     return True
+
+
+def get_top_weight_index(weights):
+        top_weight = 0
+        top_token_index = 0
+        for j, weight in enumerate(weights):
+            if weight is not None and weight > top_weight:
+                top_weight = weight
+                top_token_index = j
+        return top_token_index

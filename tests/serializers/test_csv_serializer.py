@@ -28,9 +28,10 @@ def test_csv_serializer():
         ['[པའི_66_]','པའི_66_','པས_33_'],
         ['[།_100_]','།_100_','།_100_'],
         ]
-
-    serializer = CSVSerializer(token_matrix, tokenMatrixWeigher, weighers, output_dir=Path('tests/data/'))
-    weighted_matrix = serializer.get_weighted_matix()
-    serialized_matrix = serializer.serialize_matrix(weighted_matrix)
+    for weigher in weighers:
+        tokenMatrixWeigher.add_weigher(weigher, weigher_weight=1)
+    weighted_matrix = tokenMatrixWeigher.get_weight_matrix(token_matrix)
+    serializer = CSVSerializer(token_matrix, weighted_matrix, output_dir=Path('tests/data/'))
+    serialized_matrix = serializer.serialize_matrix()
 
     assert serialized_matrix == expected_serialized_matrix

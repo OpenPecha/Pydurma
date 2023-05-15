@@ -18,11 +18,15 @@ def test_plain_text_serializer():
     tokenMatrixWeigher = TokenMatrixWeigher()
     weighers = [TokenCountWeigher()]
 
+    for weigher in weighers:
+        tokenMatrixWeigher.add_weigher(weigher, weigher_weight=1)
+    
+    weighted_matrix = tokenMatrixWeigher.get_weight_matrix(token_matrix)
+
     expected_serialized_matrix = "བཀྲ་ཤིས་ཀུད་གྱི་བཀྲ་ཤིས་པའི།"
 
-    serializer = PlainTextSerializer(token_matrix, tokenMatrixWeigher, weighers, output_dir=Path('tests/data/'))
-    weighted_matrix = serializer.get_weighted_matix()
-    serialized_matrix = serializer.serialize_matrix(weighted_matrix)
+    serializer = PlainTextSerializer(token_matrix, weighted_matrix, output_dir=Path('tests/data/'))
+    serialized_matrix = serializer.serialize_matrix()
 
     assert serialized_matrix == expected_serialized_matrix
 
