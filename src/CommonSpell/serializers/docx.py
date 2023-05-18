@@ -7,8 +7,8 @@ from CommonSpell.weighers.matrix_weigher import WeightMatrix
 
 class DocxSerializer(MdSerializer):
 
-    def __init__(self, token_matrix: TokenMatrix, weighted_matrix: WeightMatrix, output_dir: Path) -> None:
-        super().__init__(token_matrix, weighted_matrix, output_dir)
+    def __init__(self, weighted_token_matrix: TokenMatrix, output_dir: Path) -> None:
+        super().__init__(weighted_token_matrix, output_dir)
 
     
     def serialize_matrix(self):

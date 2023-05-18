@@ -32,13 +32,13 @@ class TibetanTokenizer(Tokenizer):
             start = correct_position(m.start())
             end = correct_position(m.end())
             if token_s == "":
-                t = [start, end, 0, token_s, 0]
+                t = (start, end, 0, token_s)
                 tokens.append(t)
                 continue
             token_s_for_diff = self.normalizer.normalize_pre_token_diff(token_s)
             code_str, code_str_len = self.encoder.encode_str(token_s_for_diff)
             tokenstr += code_str
-            t = [start, end, code_str_len, token_s, 0]
+            t = (start, end, code_str_len, token_s)
             tokens.append(t)
         return tokenstr, tokens
 
