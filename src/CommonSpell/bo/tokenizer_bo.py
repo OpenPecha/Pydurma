@@ -21,22 +21,24 @@ class TibetanTokenizer(Tokenizer):
     def __init__(self, encoder: Encoder, normalizer: Normalizer):
         super().__init__(encoder, normalizer)
 
-    def tokenize(self, s: str, start=0, end: int=None) -> Tuple[str, TokenList]:
+    def tokenize(self, arg) -> Tuple[str, TokenList]:
         tokens = []
         tokenstr = ""
-        if end is None:
-            end = len(s)
-        for m in TibetanTokenizer.token_pattern.finditer(s, start, end):
+        string, correct_position = self.get_input(arg)
+        end = len(string)
+        for m in TibetanTokenizer.token_pattern.finditer(string):
             token_s = self.normalizer.normalize_always(m.group(0))
-            # compare_s = self.normalizer.normalize_pre_token_comparison(token_s)
+            compare_s = self.normalizer.normalize_pre_token_comparison(token_s)
+            start = correct_position(m.start())
+            end = correct_position(m.end())
             if token_s == "":
-                t = (m.start(), m.end(), 0, token_s)
+                t = (start, end, 0, token_s)
                 tokens.append(t)
                 continue
             token_s_for_diff = self.normalizer.normalize_pre_token_diff(token_s)
             code_str, code_str_len = self.encoder.encode_str(token_s_for_diff)
             tokenstr += code_str
-            t = (m.start(), m.end(), code_str_len, token_s)
+            t = (start, end, code_str_len, token_s)
             tokens.append(t)
         return tokens, tokenstr
 
