@@ -1,6 +1,8 @@
+import re
 from CommonSpell.bo.tokenizer_bo import TibetanTokenizer
 from CommonSpell.bo.normalizer_bo import TibetanNormalizer
 from CommonSpell.encoder import Encoder
+from CommonSpell.input_filters.pattern_filter import PatternInputFilter
 
 def test_tokenizer_bo():
     test_string = "བཀྲ་ཤིས་ཀུན་གྱི་བཀྲ་ཤིས་པ།"
@@ -21,6 +23,34 @@ def test_tokenizer_bo():
     token_list, token_str = tokenizer.tokenize(test_string)
     assert token_list == expected_token_list
     assert token_str == expected_token_string
+
+
+def test_tokenizer_with_filter():
+    test_string = "གི་ཚེ་རང་ཉིད༌        ཉིད་སྐྱེ་ན་རྒྱུའི། །"
+    expected_token_string = '+,-../012'
+    expected_token_list = [
+        (0, 3, 1, 'གི་'),
+        (3, 6, 1, 'ཚེ་'),
+        (6, 9, 1, 'རང་'),
+        (9, 21, 1, 'ཉིད་'),
+        (21, 25, 1, 'ཉིད་'),
+        (25, 30, 1, 'སྐྱེ་'),
+        (30, 32, 1, 'ན་'),
+        (32, 38, 1, 'རྒྱུའི'),
+        (38, 41, 1, '།། '),
+
+        ]
+    encoder = Encoder()
+    normalizer = TibetanNormalizer()
+    tokenizer = TibetanTokenizer(encoder=encoder, normalizer=normalizer)
+    filtered = PatternInputFilter(test_string, re.compile("། །"), "༎ ")
+    filtered = PatternInputFilter(filtered, re.compile("༌"), "་")
+    filtered = PatternInputFilter(filtered, re.compile("་ +"), "་")
+    token_list, token_str = tokenizer.tokenize(filtered)
+    assert token_list == expected_token_list
+    assert token_str == expected_token_string
+
+
 
 
 # if __name__ == "__main__":

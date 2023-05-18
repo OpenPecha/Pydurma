@@ -2,6 +2,7 @@ from typing import Tuple, List
 
 from CommonSpell.normalizer import Normalizer
 from CommonSpell.encoder import Encoder
+from CommonSpell.input_filters.input_filter import InputFilter
 
 Token = Tuple[int, int, int, str]
 TokenList = List[Token]
@@ -17,8 +18,20 @@ class Tokenizer():
 
     def reset(self):
         self.encoder.reset()
+    
+    def get_input(self, arg):
+        """
+        returns the input data from the argument, which can be a string or an InputFilter
 
-    def tokenize(self, s: str, start: int = 0, end: int = None) -> Tuple[str, TokenList]:
+        returns:
+           - the string to be tokenized
+           - the function to correct the positions to get those of the original string
+        """
+        if isinstance(arg, InputFilter):
+            return arg.get_string(), arg.correct_position
+        return arg, lambda x: x
+
+    def tokenize(self, arg) -> Tuple[str, TokenList]:
         """
         A function that takes as arguments:
         - a string to tokenize

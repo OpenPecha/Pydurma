@@ -1,12 +1,14 @@
 from pathlib import Path
 
 from CommonSpell.aligners.aligner import Aligner
+from CommonSpell.input_filters.pattern_filter import PatternInputFilter
 from CommonSpell.tokenizer import Tokenizer
 
 class CommonSpeller():
 
-    def __init__(self, aligner: Aligner, tokenizer: Tokenizer, version_paths) -> None:
+    def __init__(self, aligner: Aligner, filter_patterns: list[tuple], tokenizer: Tokenizer, version_paths) -> None:
         self.aligner = aligner
+        self.filter_patterns = filter_patterns
         self.tokenizer = tokenizer
         self.version_paths = version_paths
 
@@ -19,6 +21,9 @@ class CommonSpeller():
         token_lists = []
         for version_path in self.version_paths:
             version_text = version_path.read_text(encoding='utf-8')
+            for filter_pattern in self.filter_patterns:
+                version_text = PatternInputFilter(version_text, filter_pattern[0], filter_pattern[1])
+            
             token_list, token_string = self.tokenizer.tokenize(version_text)
             token_strings.append(token_string)
             token_lists.append(token_list)
