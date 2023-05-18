@@ -8,19 +8,19 @@ def test_tokenizer_bo():
     test_string = "བཀྲ་ཤིས་ཀུན་གྱི་བཀྲ་ཤིས་པ།"
     expected_token_string = '+,-.+,/0'
     expected_token_list = [
-        (0, 4, 1, 'བཀྲ་'), 
-        (4, 8, 1, 'ཤིས་'), 
-        (8, 12, 1, 'ཀུན་'),
-        (12, 16, 1, 'གྱི་'),
-        (16, 20, 1, 'བཀྲ་'),
-        (20, 24, 1, 'ཤིས་'),
-        (24, 25, 1, 'པ'), 
-        (25, 26, 1, '།')
+        [0, 4, 1, 'བཀྲ་', 0], 
+        [4, 8, 1, 'ཤིས་', 0], 
+        [8, 12, 1, 'ཀུན་', 0],
+        [12, 16, 1, 'གྱི་', 0],
+        [16, 20, 1, 'བཀྲ་', 0],
+        [20, 24, 1, 'ཤིས་', 0],
+        [24, 25, 1, 'པ', 0], 
+        [25, 26, 1, '།', 0]
         ]
     encoder = Encoder()
     normalizer = TibetanNormalizer()
     tokenizer = TibetanTokenizer(encoder=encoder, normalizer=normalizer)
-    token_list, token_str = tokenizer.tokenize(test_string)
+    token_str, token_list = tokenizer.tokenize(test_string)
     assert token_list == expected_token_list
     assert token_str == expected_token_string
 
@@ -29,15 +29,15 @@ def test_tokenizer_with_filter():
     test_string = "གི་ཚེ་རང་ཉིད༌        ཉིད་སྐྱེ་ན་རྒྱུའི། །"
     expected_token_string = '+,-../012'
     expected_token_list = [
-        (0, 3, 1, 'གི་'),
-        (3, 6, 1, 'ཚེ་'),
-        (6, 9, 1, 'རང་'),
-        (9, 21, 1, 'ཉིད་'),
-        (21, 25, 1, 'ཉིད་'),
-        (25, 30, 1, 'སྐྱེ་'),
-        (30, 32, 1, 'ན་'),
-        (32, 38, 1, 'རྒྱུའི'),
-        (38, 41, 1, '།། '),
+        [0, 3, 1, 'གི་', 0],
+        [3, 6, 1, 'ཚེ་', 0],
+        [6, 9, 1, 'རང་', 0],
+        [9, 21, 1, 'ཉིད་', 0],
+        [21, 25, 1, 'ཉིད་', 0],
+        [25, 30, 1, 'སྐྱེ་', 0],
+        [30, 32, 1, 'ན་', 0],
+        [32, 38, 1, 'རྒྱུའི', 0],
+        [38, 41, 1, '།། ', 0],
 
         ]
     encoder = Encoder()
@@ -46,7 +46,7 @@ def test_tokenizer_with_filter():
     filtered = PatternInputFilter(test_string, re.compile("། །"), "༎ ")
     filtered = PatternInputFilter(filtered, re.compile("༌"), "་")
     filtered = PatternInputFilter(filtered, re.compile("་ +"), "་")
-    token_list, token_str = tokenizer.tokenize(filtered)
+    token_str, token_list = tokenizer.tokenize(filtered)
     assert token_list == expected_token_list
     assert token_str == expected_token_string
 

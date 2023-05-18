@@ -6,7 +6,7 @@ def is_consecutive_diff_token(prev_tokens_entry, tokens_entry):
      return False
 
 def get_new_token_entry(prev_token, cur_token):
-    new_token_entry = ()
+    new_token_entry = []
     if cur_token:
         try:
             prev_token_string = prev_token[3]
@@ -17,7 +17,7 @@ def get_new_token_entry(prev_token, cur_token):
         except:
             cur_token_string = ''
         merged_token_string = prev_token_string+cur_token_string
-        new_token_entry = (prev_token[0],cur_token[1], cur_token[2], merged_token_string)
+        new_token_entry = [prev_token[0],cur_token[1], cur_token[2], merged_token_string, cur_token[4]]
     else:
         new_token_entry = prev_token
     return new_token_entry
@@ -36,7 +36,7 @@ def postprocess_first_entry(token_matrix):
         if token:
             postprocessed_first_entry.append(token)
         else:
-            postprocessed_first_entry.append((0, 0, 1, ''))
+            postprocessed_first_entry.append([0, 0, 1, '', 0])
     return postprocessed_first_entry
 
 def merge_consecutive_diff_tokens_entries(token_matrix):

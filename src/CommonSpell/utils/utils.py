@@ -126,11 +126,11 @@ def is_diff_token(tokens: TokenList) -> bool:
     return True
 
 
-def get_top_weight_index(weights):
+def get_top_weight_index(tokens):
         top_weight = 0
         top_token_index = 0
-        for j, weight in enumerate(weights):
-            if weight is not None and weight > top_weight:
-                top_weight = weight
+        for j, token in enumerate(tokens):
+            if token is not None and token[4] > top_weight:
+                top_weight = token[4]
                 top_token_index = j
         return top_token_index

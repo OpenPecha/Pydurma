@@ -8,16 +8,16 @@ from CommonSpell.utils.utils import get_top_weight_index
 class PlainTextSerializer(Serializer):
 
 
-    def __init__(self, token_matrix: TokenMatrix, weighted_matrix: WeightMatrix, output_dir: Path) -> None:
-        super().__init__(token_matrix, weighted_matrix, output_dir)
+    def __init__(self, weighted_token_matrix: TokenMatrix, output_dir: Path) -> None:
+        super().__init__(weighted_token_matrix, output_dir)
 
     
     def serialize_matrix(self):
         serialized_matrix = ''
-        for tokens, weights in zip(self.token_matrix, self.weighted_matrix):
-            top_token_index = get_top_weight_index(weights)
+        for tokens_info in self.weighted_token_matrix:
+            top_token_index = get_top_weight_index(tokens_info)
             try:
-                voted_token = tokens[top_token_index][3]
+                voted_token = tokens_info[top_token_index][3]
             except:
                 voted_token = ''
             serialized_matrix += voted_token

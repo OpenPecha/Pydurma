@@ -5,9 +5,8 @@ from CommonSpell.weighers.matrix_weigher import WeightMatrix
 
 class Serializer:
 
-    def __init__(self, token_matrix: TokenMatrix, weighted_matrix: WeightMatrix, output_dir: Path) -> None:
-        self.token_matrix = token_matrix
-        self.weighted_matrix = weighted_matrix
+    def __init__(self, weighted_token_matrix: TokenMatrix, output_dir: Path) -> None:
+        self.weighted_token_matrix = weighted_token_matrix
         self.output_dir = output_dir
 
     def serialize_matrix(self):
