@@ -50,7 +50,7 @@ class TokenMatrixWeigher:
             result.append((weigher.weigh(tokens), weigher_weight, weigher.relative))
         return result
 
-    def fill_average_row_weights(self, token_matrix, weight_matrix, row_index: int):
+    def fill_average_row_weights(self, token_matrix, row_index: int):
         """
         Get the weighted average of the weights for a column
         """
@@ -62,7 +62,7 @@ class TokenMatrixWeigher:
         if len(row_weighted_weights) == 1:
             weights = row_weighted_weights[0][0]
             for col_index, weight in enumerate(weights):
-                weight_matrix[row_index][col_index] = weight
+                token_matrix[row_index][col_index][4] = weight
             return
         nb_columns = len(token_matrix[0])
         # prepare the weighted average calculation
@@ -89,9 +89,9 @@ class TokenMatrixWeigher:
                         // relative_weight_totals[col_index]
                     )
                     weight = int(weight * relative_weight / 100)
-                weight_matrix[row_index][col_index] = weight
+                token_matrix[row_index][col_index][4] = weight
 
-    def get_weight_matrix(self, token_matrix: TokenMatrix) -> WeightMatrix:
+    def get_weight_matrix(self, token_matrix: TokenMatrix) -> TokenMatrix:
         """
         Returns a matrix with the same dimensions as the TokenMatrix, containing the
         final weight of each token, averaged between the different weighers.
@@ -99,12 +99,6 @@ class TokenMatrixWeigher:
         TODO: TokenMatrix and this matrix should probably instead by numpy arrays.
         """
         nb_rows = len(token_matrix)
-        nb_columns = len(token_matrix[0])
-        if len(self.weighted_weighters) == 0:
-            return None
-        weight_matrix: WeightMatrix = [
-            [None for _ in range(nb_columns)] for _ in range(nb_rows)
-        ]
         for row_index in range(nb_rows):
-            self.fill_average_row_weights(token_matrix, weight_matrix, row_index)
-        return weight_matrix
+            self.fill_average_row_weights(token_matrix, row_index)
+        return token_matrix

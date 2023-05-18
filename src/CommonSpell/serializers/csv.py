@@ -10,28 +10,30 @@ from CommonSpell.utils.utils import get_top_weight_index
 class CSVSerializer(Serializer):
 
 
-    def __init__(self, token_matrix: TokenMatrix, weighted_matrix:WeightMatrix, output_dir: Path) -> None:
-        super().__init__(token_matrix, weighted_matrix, output_dir)
+    def __init__(self, weighted_token_matrix: TokenMatrix, output_dir: Path) -> None:
+        super().__init__(weighted_token_matrix, output_dir)
 
 
-    def get_token_entry(self, tokens, weights, top_token_index):
+    def get_token_entry(self, tokens, top_token_index):
         token_entry = []
-        for token_index, (token, weight) in enumerate(zip(tokens, weights)):
+        for token_index,token in enumerate(tokens):
             if token is None:
                 token_string = ""
+                token_weight = 0
             else:
                 token_string = token[3]
+                token_weight = token[4]
             if token_index == top_token_index:
-                token_entry.append(f"[{token_string}_{weight}_]")
+                token_entry.append(f"[{token_string}_{token_weight}_]")
             else:
-                token_entry.append(f"{token_string}_{weight}_")
+                token_entry.append(f"{token_string}_{token_weight}_")
         return token_entry
 
     def serialize_matrix(self):
             serialized_matrix = []
-            for tokens, weights in zip(self.token_matrix, self.weighted_matrix):
-                top_token_index = get_top_weight_index(weights)
-                token_entry = self.get_token_entry(tokens, weights, top_token_index)
+            for tokens_info in self.weighted_token_matrix:
+                top_token_index = get_top_weight_index(tokens_info)
+                token_entry = self.get_token_entry(tokens_info, top_token_index)
                 serialized_matrix.append(token_entry)
             return serialized_matrix
 
