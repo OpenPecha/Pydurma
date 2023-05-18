@@ -4,7 +4,7 @@ from CommonSpell.normalizer import Normalizer
 from CommonSpell.encoder import Encoder
 from CommonSpell.input_filters.input_filter import InputFilter
 
-Token = list[int, int, int, str, int]
+Token = Tuple[int, int, int, str, int]
 TokenList = List[Token]
 
 class Tokenizer():

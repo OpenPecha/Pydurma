@@ -62,7 +62,7 @@ class TokenMatrixWeigher:
         if len(row_weighted_weights) == 1:
             weights = row_weighted_weights[0][0]
             for col_index, weight in enumerate(weights):
-                token_matrix[row_index][col_index][4] = weight
+                token_matrix[row_index][col_index] = token_matrix[row_index][col_index] + (weight,)
             return
         nb_columns = len(token_matrix[0])
         # prepare the weighted average calculation
@@ -89,7 +89,7 @@ class TokenMatrixWeigher:
                         // relative_weight_totals[col_index]
                     )
                     weight = int(weight * relative_weight / 100)
-                token_matrix[row_index][col_index][4] = weight
+                token_matrix[row_index][col_index] = token_matrix[row_index][col_index] + (weight,)
 
     def get_weight_matrix(self, token_matrix: TokenMatrix) -> TokenMatrix:
         """
