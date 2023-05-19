@@ -24,7 +24,7 @@ class CommonSpeller():
             for filter_pattern in self.filter_patterns:
                 version_text = PatternInputFilter(version_text, filter_pattern[0], filter_pattern[1])
             
-            token_list, token_string = self.tokenizer.tokenize(version_text)
+            token_string, token_list = self.tokenizer.tokenize(version_text)
             token_strings.append(token_string)
             token_lists.append(token_list)
         return token_strings, token_lists
