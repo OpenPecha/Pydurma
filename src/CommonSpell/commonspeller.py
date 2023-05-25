@@ -11,6 +11,7 @@ class CommonSpeller():
         self.filter_patterns = filter_patterns
         self.tokenizer = tokenizer
         self.version_paths = version_paths
+        self.version_paths.sort()
 
     
     def add_versions(self, version_path: Path):

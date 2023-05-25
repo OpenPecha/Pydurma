@@ -6,6 +6,16 @@ from CommonSpell.weighers.token_weigher_count import TokenCountWeigher
 
 
 def test_md_serializer():
+    version_paths = [
+        Path('./data/02-Narthang.txt'),
+        Path('./data/01-Derge.txt'),
+        Path('./data/03-Lhasa.txt'),
+    ]
+    versions_to_serialize = {
+        '01-Derge': 'D',
+        '02-Narthang': 'N'
+        }
+    
     token_matrix = [
         [(0, 4, 1, 'བཀྲ་'), (0, 4, 1, 'བཀྲ་'), (0, 4, 1, 'བཀྲ་')],
         [(4, 8, 1, 'ཤིས་'), (4, 8, 1, 'ཤིས་'), (4, 8, 1, 'ཤིས་')],
@@ -25,12 +35,15 @@ def test_md_serializer():
 
     expected_serialized_matrix = """བཀྲ་ཤིས་ཀུད་[^1]གྱི་[^2]བཀྲ་ཤིས་པའི[^3]།
 
-[^1]: ཀུད་]V1: ཀུན་; V2,V3: ཀུད་;
-[^2]: གྱི་]V1,V2: གྱི་; V3: ཀྱི་;
-[^3]: པའི]V1,V2: པའི; V3: པས;
+[^1]: ཀུད་]D: ཀུན་; N: ཀུད་;
+[^2]: གྱི་]D,N: གྱི་;
+[^3]: པའི]D,N: པའི;
 """
 
-    serializer = MdSerializer(weighted_matrix, output_dir=Path('tests/data/'))
+    serializer = MdSerializer(weighted_matrix, 
+                              output_dir=Path('tests/data/'), 
+                              version_paths=version_paths, 
+                              verions_to_serialize=versions_to_serialize)
     serialized_matrix = serializer.serialize_matrix()
 
     assert serialized_matrix == expected_serialized_matrix
