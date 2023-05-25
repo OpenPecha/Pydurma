@@ -10,8 +10,16 @@ from CommonSpell.utils.utils import is_diff_token, get_token_strings, get_top_we
 
 class MdSerializer(Serializer):
 
-    def __init__(self, weighted_token_matrix: TokenMatrix, output_dir: Path) -> None:
-        super().__init__(weighted_token_matrix, output_dir)
+    def __init__(self, 
+                 weighted_token_matrix: TokenMatrix, 
+                 output_dir: Path, 
+                 version_paths: List[Path],
+                 verions_to_serialize: List[str]) -> None:
+        self.weighted_token_matrix = weighted_token_matrix
+        self.output_dir = output_dir
+        self.version_paths = version_paths
+        self.version_paths.sort()
+        self.versions_to_serialize = verions_to_serialize
 
     def regroup_same_diffs(self, diff_tokens):
         regrouped_notes = {}
@@ -19,9 +27,20 @@ class MdSerializer(Serializer):
             regrouped_notes[diff_string] = [version_name] if diff_string not in regrouped_notes.keys() else regrouped_notes[diff_string] + [version_name]
         return regrouped_notes
 
+    def filter_versions_to_serialize(self, diff_token_strings, versions_to_serialize):
+        filtered_diff_token_strings = {}
+        if not versions_to_serialize:
+            return diff_token_strings
+        for version_name, diff_string in diff_token_strings.items():
+            if version_name in versions_to_serialize:
+                version_code = versions_to_serialize.get(version_name)
+                filtered_diff_token_strings[version_code] = diff_string
+        return filtered_diff_token_strings
+
     def get_footnote_text(self, diff_tokens, voted_token):
         note_text = f'{voted_token}]'
-        diff_token_strings = get_token_strings(diff_tokens)
+        diff_token_strings = get_token_strings(diff_tokens, self.version_paths)
+        diff_token_strings = self.filter_versions_to_serialize(diff_token_strings, self.versions_to_serialize)
         regrouped_notes = self.regroup_same_diffs(diff_token_strings)
         for diff_string, verions in regrouped_notes.items():
             version_names = ','.join(verions)

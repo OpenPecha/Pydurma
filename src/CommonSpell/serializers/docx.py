@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import List
 from pypandoc import convert_text
 
 from CommonSpell.aligners.aligner import TokenMatrix
@@ -7,8 +8,16 @@ from CommonSpell.weighers.matrix_weigher import WeightMatrix
 
 class DocxSerializer(MdSerializer):
 
-    def __init__(self, weighted_token_matrix: TokenMatrix, output_dir: Path) -> None:
-        super().__init__(weighted_token_matrix, output_dir)
+    def __init__(self, 
+                 weighted_token_matrix: TokenMatrix, 
+                 output_dir: Path, 
+                 version_paths: List[Path],
+                 verions_to_serialize: List[str]) -> None:
+        self.weighted_token_matrix = weighted_token_matrix
+        self.output_dir = output_dir
+        self.version_paths = version_paths
+        self.version_paths.sort()
+        self.versions_to_serialize = verions_to_serialize
 
     
     def serialize_matrix(self):

@@ -110,18 +110,19 @@ def debug_token_strings(logger, token_strings: List[str], encoder: Encoder):
     for token_string in token_strings:
         print(encoder.decode_string(token_string))
 
-def get_token_strings(tokens: TokenList) -> Dict:
+def get_token_strings(tokens: TokenList, version_paths) -> Dict:
     token_strings = {}
-    for version_index, token in enumerate(tokens,1):
+    for version_index, token in enumerate(tokens):
+        version_name = version_paths[version_index].stem
         try:
-            token_strings[f'V{version_index}'] = token[3]
+            token_strings[version_name] = token[3]
         except:
-            token_strings[f'V{version_index}'] = ''
+            token_strings[version_name] = ''
     return token_strings
 
-def is_diff_token(tokens: TokenList) -> bool: 
-    token_strings = get_token_strings(tokens)
-    if len(list(set(token_strings.values()))) == 1:
+def is_diff_token(tokens: TokenList) -> bool:
+    token_strings = [token[3] if token is not None and token[3] is not None else '' for token in tokens]
+    if len(list(set(token_strings))) == 1:
         return False
     return True
 
