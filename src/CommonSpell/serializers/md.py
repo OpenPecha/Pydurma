@@ -30,7 +30,8 @@ class MdSerializer(Serializer):
     def filter_versions_to_serialize(self, diff_token_strings, versions_to_serialize):
         filtered_diff_token_strings = {}
         if not versions_to_serialize:
-            return diff_token_strings
+            for version_index, (version_name, diff_string) in enumerate(diff_token_strings.items(), 1):
+                filtered_diff_token_strings[f'V{version_index}'] = diff_string
         for version_name, diff_string in diff_token_strings.items():
             if version_name in versions_to_serialize:
                 version_code = versions_to_serialize.get(version_name)
