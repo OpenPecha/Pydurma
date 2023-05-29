@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import List
 
 from CommonSpell.aligners.aligner import Aligner
 from CommonSpell.input_filters.pattern_filter import PatternInputFilter
@@ -6,7 +7,7 @@ from CommonSpell.tokenizer import Tokenizer
 
 class CommonSpeller():
 
-    def __init__(self, aligner: Aligner, filter_patterns: list[tuple], tokenizer: Tokenizer, version_paths: list[Path]) -> None:
+    def __init__(self, aligner: Aligner, filter_patterns: List[tuple], tokenizer: Tokenizer, version_paths: List[Path]) -> None:
         self.aligner = aligner
         self.filter_patterns = filter_patterns
         self.tokenizer = tokenizer
