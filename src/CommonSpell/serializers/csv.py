@@ -10,8 +10,8 @@ from CommonSpell.utils.utils import get_top_weight_index
 class CSVSerializer(Serializer):
 
 
-    def __init__(self, weighted_token_matrix: TokenMatrix, output_dir: Path) -> None:
-        super().__init__(weighted_token_matrix, output_dir)
+    def __init__(self, weighted_token_matrix: TokenMatrix, output_dir: Path, text_id:str) -> None:
+        super().__init__(weighted_token_matrix, output_dir, text_id)
 
 
     def get_token_entry(self, tokens, top_token_index):
@@ -38,7 +38,7 @@ class CSVSerializer(Serializer):
             return serialized_matrix
 
     def save_serialized_matrix(self, serialized_matrix):
-        output_file_path = self.output_dir / "common_spell.csv"
+        output_file_path = self.output_dir / f"{self.text_id}.csv"
         with open(output_file_path, 'w', newline='') as csv_file:
             csv_writter = csv.writer(csv_file)
             csv_writter.writerows(serialized_matrix)

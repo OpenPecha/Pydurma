@@ -31,7 +31,7 @@ def test_docx_serializer():
     with tempfile.TemporaryDirectory() as temp_dir:
         expected_serialized_matrix_path = Path(temp_dir) / 'common_spell.docx'
 
-        serializer = DocxSerializer(weighted_matrix, output_dir=Path(temp_dir))
+        serializer = DocxSerializer(weighted_matrix, output_dir=Path(temp_dir), text_id='test')
         serialized_matrix_md = serializer.serialize_matrix()
         serialized_matrix_path = serializer.save_serialized_matrix(serialized_matrix_md)
 

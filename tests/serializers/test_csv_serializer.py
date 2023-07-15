@@ -31,7 +31,7 @@ def test_csv_serializer():
     for weigher in weighers:
         tokenMatrixWeigher.add_weigher(weigher, weigher_weight=1)
     weighted_matrix = tokenMatrixWeigher.get_weight_matrix(token_matrix)
-    serializer = CSVSerializer(weighted_matrix, output_dir=Path('tests/data/'))
+    serializer = CSVSerializer(weighted_matrix, output_dir=Path('tests/data/'), text_id='test')
     serialized_matrix = serializer.serialize_matrix()
 
     assert serialized_matrix == expected_serialized_matrix

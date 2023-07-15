@@ -25,7 +25,7 @@ def test_plain_text_serializer():
 
     expected_serialized_matrix = "བཀྲ་ཤིས་ཀུད་གྱི་བཀྲ་ཤིས་པའི།"
 
-    serializer = PlainTextSerializer(weighted_matrix, output_dir=Path('tests/data/'))
+    serializer = PlainTextSerializer(weighted_matrix, output_dir=Path('tests/data/'), text_id='test')
     serialized_matrix = serializer.serialize_matrix()
 
     assert serialized_matrix == expected_serialized_matrix

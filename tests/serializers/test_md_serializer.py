@@ -42,6 +42,7 @@ def test_md_serializer():
 
     serializer = MdSerializer(weighted_matrix, 
                               output_dir=Path('tests/data/'), 
+                              text_id='test',
                               version_paths=version_paths, 
                               verions_to_serialize=versions_to_serialize)
     serialized_matrix = serializer.serialize_matrix()
