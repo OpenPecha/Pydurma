@@ -34,7 +34,7 @@ def test_md_serializer():
         tokenMatrixWeigher.add_weigher(weigher, weigher_weight=1)
     weighted_matrix = tokenMatrixWeigher.get_weight_matrix(token_matrix)
 
-    expected_serialized_matrix = "བཀྲ་ཤིས་ཀུད་(1)<«སྡེ་»ཀུན་>གྱི་བཀྲ་:ཤིས་པས(2)<«སྡེ་»ཤིས་པའ«སྣར་»ཤིས་པའི>།"
+    expected_serialized_matrix = "བཀྲ་ཤིས་ཀུད་(1) <«སྡེ་»ཀུན་>གྱི་བཀྲ་:ཤིས་པས(2) <«སྡེ་»ཤིས་པའ«སྣར་»ཤིས་པའི>།"
 
     serializer = HFMLSerializer(weighted_matrix, 
                               output_dir=Path('tests/data/'), 

@@ -73,9 +73,9 @@ class HFMLSerializer(Serializer):
                 footnote_text = self.get_footnote_text(tokens_info, voted_token)
                 if footnote_text != '<>':
                     if self.is_single_syl_note(voted_token):
-                        serialized_hfml += f'{voted_token}({diff_note_walker}){footnote_text}'
+                        serialized_hfml += f'{voted_token}({diff_note_walker}) {footnote_text}'
                     else:
-                        serialized_hfml += f':{voted_token}({diff_note_walker}){footnote_text}'
+                        serialized_hfml += f':{voted_token}({diff_note_walker}) {footnote_text}'
                     diff_note_walker += 1
                 else:
                     serialized_hfml += voted_token
