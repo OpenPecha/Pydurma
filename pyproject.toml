@@ -23,6 +23,7 @@ dependencies = [
     "numpy==1.24.2",
     "openpecha==0.9.23",
     "pypandoc==1.11",
+    "prettytable==3.8.0"
 ]
 
 
