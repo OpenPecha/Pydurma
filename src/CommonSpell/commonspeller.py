@@ -6,7 +6,7 @@ from CommonSpell.tokenizer import Tokenizer
 
 class CommonSpeller():
 
-    def __init__(self, aligner: Aligner, filter_patterns: list[tuple], tokenizer: Tokenizer, version_paths, examplar_version_path):
+    def __init__(self, aligner: Aligner, filter_patterns: list[tuple], tokenizer: Tokenizer, version_paths: list, examplar_version_path: Path):
         self.aligner = aligner
         self.filter_patterns = filter_patterns
         self.tokenizer = tokenizer
