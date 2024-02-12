@@ -6,13 +6,16 @@ from CommonSpell.tokenizer import Tokenizer
 
 class CommonSpeller():
 
-    def __init__(self, aligner: Aligner, filter_patterns: list[tuple], tokenizer: Tokenizer, version_paths: list, examplar_version_path: Path):
+    def __init__(self, aligner: Aligner, filter_patterns: list[tuple], tokenizer: Tokenizer, version_paths: list, examplar_version_path: None):
         self.aligner = aligner
         self.filter_patterns = filter_patterns
         self.tokenizer = tokenizer
         self.version_paths = version_paths
         self.version_paths.sort()
-        self.examplar_version_path = examplar_version_path
+        if examplar_version_path is None:
+            self.examplar_version_path = self.version_paths[0]
+        else:
+            self.examplar_version_path = examplar_version_path
         
 
     
