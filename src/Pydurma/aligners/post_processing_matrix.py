@@ -1,4 +1,4 @@
-from CommonSpell.utils.utils import is_diff_token
+from Pydurma.utils.utils import is_diff_token
 
 def is_consecutive_diff_token(prev_tokens_entry, tokens_entry):
      if is_diff_token(prev_tokens_entry) and is_diff_token(tokens_entry):

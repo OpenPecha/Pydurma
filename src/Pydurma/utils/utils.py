@@ -1,9 +1,9 @@
 import logging
 from typing import List, Dict
 
-from CommonSpell.tokenizer import Token, TokenList
-from CommonSpell.encoder import Encoder
-from CommonSpell.aligners.aligner import TokenMatrix
+from Pydurma.tokenizer import Token, TokenList
+from Pydurma.encoder import Encoder
+from Pydurma.aligners.aligner import TokenMatrix
 
 
 def token_row_to_text_row(

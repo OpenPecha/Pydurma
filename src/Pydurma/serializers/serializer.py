@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from CommonSpell.aligners.aligner import TokenMatrix
-from CommonSpell.weighers.matrix_weigher import WeightMatrix
+from Pydurma.aligners.aligner import TokenMatrix
+from Pydurma.weighers.matrix_weigher import WeightMatrix
 
 class Serializer:
 

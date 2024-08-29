@@ -3,9 +3,9 @@ import pytest
 from pathlib import Path
 
 
-from CommonSpell.serializers.docx import DocxSerializer
-from CommonSpell.weighers.matrix_weigher import TokenMatrixWeigher
-from CommonSpell.weighers.token_weigher_count import TokenCountWeigher
+from Pydurma.serializers.docx import DocxSerializer
+from Pydurma.weighers.matrix_weigher import TokenMatrixWeigher
+from Pydurma.weighers.token_weigher_count import TokenCountWeigher
 
 
 @pytest.mark.skip(reason="not able to install pandoc in github action for ci")

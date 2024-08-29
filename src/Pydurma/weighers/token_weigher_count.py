@@ -1,7 +1,7 @@
 from typing import List
 
-from CommonSpell.tokenizer import Token
-from CommonSpell.weighers.token_weigher import TokenWeigher
+from Pydurma.tokenizer import Token
+from Pydurma.weighers.token_weigher import TokenWeigher
 
 
 class TokenCountWeigher(TokenWeigher):

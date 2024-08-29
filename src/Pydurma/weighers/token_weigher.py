@@ -1,6 +1,6 @@
 from typing import List
 
-from CommonSpell.tokenizer import Token
+from Pydurma.tokenizer import Token
 
 class TokenWeigher():
     """

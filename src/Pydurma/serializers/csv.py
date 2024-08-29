@@ -1,10 +1,10 @@
 import csv
 from pathlib import Path
 
-from CommonSpell.aligners.aligner import TokenMatrix
-from CommonSpell.serializers.serializer import Serializer
-from CommonSpell.weighers.matrix_weigher import WeightMatrix
-from CommonSpell.utils.utils import get_top_weight_index
+from Pydurma.aligners.aligner import TokenMatrix
+from Pydurma.serializers.serializer import Serializer
+from Pydurma.weighers.matrix_weigher import WeightMatrix
+from Pydurma.utils.utils import get_top_weight_index
 
 
 class CSVSerializer(Serializer):

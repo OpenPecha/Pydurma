@@ -1,5 +1,5 @@
 from typing import List,Dict
-from CommonSpell.tokenizer import TokenList
+from Pydurma.tokenizer import TokenList
 
 TokenMatrix = List[TokenList]
 

@@ -16,7 +16,7 @@
 
 ## Project description
 
-CommonSpell creates a clean e-text version of a Tibetan work from multiple flawed sources.
+Pydurma creates a clean e-text version of a Tibetan work from multiple flawed sources.
 
 Benefits include:
 
@@ -24,7 +24,7 @@ Benefits include:
 - Creating high-quality e-texts from low-quality sources
 - Doesn't require a spell checker (which doesn't exist yet for Tibetan language)
 
-CommonSpell uses a weighted majority algorithm that compares versions of the work syllable-by-syllable and chooses the most common character from among the versions in each position of the text. Since mistakes—whether made during the woodblock carving, hand copying, digital text inputting, or OCRing process—are unlikely to be the same in the majority of the versions, they are unlikely to outrank the correct characters in any given position of the text. The result is a new clean version called a "vulgate edition."
+Pydurma uses a weighted majority algorithm that compares versions of the work syllable-by-syllable and chooses the most common character from among the versions in each position of the text. Since mistakes—whether made during the woodblock carving, hand copying, digital text inputting, or OCRing process—are unlikely to be the same in the majority of the versions, they are unlikely to outrank the correct characters in any given position of the text. The result is a new clean version called a "vulgate edition."
 
 ### Uncritical editions or vulgates
 
@@ -64,11 +64,11 @@ To create a vulgate edition, you'll need:
 > 
 > You can also convert scanned texts in the [BDRC library](https://library.bdrc.io) to the OPF format with the [OCR Pipeline](https://tools.openpecha.org/ocr/).
 > 
-> To test CommonSpell, you can also use the OPF files in the [text folder](https://github.com/OpenPecha/fast-collation-tools/tree/main/tests) in this repo.
+> To test Pydurma, you can also use the OPF files in the [text folder](https://github.com/OpenPecha/fast-collation-tools/tree/main/tests) in this repo.
 
 ## Instructions for use
 
-### Configure CommonSpell
+### Configure Pydurma
 
 Assuming you've installed the software above and have OPF files:
 
@@ -87,7 +87,7 @@ def test_merger():
 	vulgatizer.create_vulgate()
 ```
 
-### Run CommonSpell
+### Run Pydurma
 
 - Run `vulgatizer_op_ocr.py`
 
@@ -97,9 +97,9 @@ The vulgate edition OPF will be saved in `./data/opfs/generic_editions`.
 
 - No code to detect [transpositions](http://multiversiondocs.blogspot.com/2008/10/transpositions.html).
 
-## CommonSpell workflow
+## Pydurma workflow
 
-CommonSpell creates common spell editions in three steps:
+Pydurma creates common spell editions in three steps:
 
 - Preprocessing
 - Alignment
@@ -151,10 +151,10 @@ If you'd like to help out, check out our [contributing guidelines](/CONTRIBUTING
 
 ## Need help?
 
-- File an [issue](https://github.com/OpenPecha/CommonSpell/issues/new).
+- File an [issue](https://github.com/OpenPecha/Pydurma/issues/new).
 - Join our [Discord](https://discord.com/invite/7GFpPFSTeA) and ask us there.
 - Email us at openpecha[at]gmail[dot]com.
 
 ## Terms of use
 
-CommonSpell is licensed under the [Apache license](/LICENSE.md).
+Pydurma is licensed under the [Apache license](/LICENSE.md).

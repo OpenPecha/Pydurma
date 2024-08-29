@@ -2,9 +2,9 @@ from pathlib import Path
 from typing import List
 from pypandoc import convert_text
 
-from CommonSpell.aligners.aligner import TokenMatrix
-from CommonSpell.serializers.md import MdSerializer
-from CommonSpell.weighers.matrix_weigher import WeightMatrix
+from Pydurma.aligners.aligner import TokenMatrix
+from Pydurma.serializers.md import MdSerializer
+from Pydurma.weighers.matrix_weigher import WeightMatrix
 
 class DocxSerializer(MdSerializer):
 

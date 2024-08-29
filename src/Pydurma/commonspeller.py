@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from CommonSpell.aligners.aligner import Aligner
-from CommonSpell.input_filters.pattern_filter import PatternInputFilter
-from CommonSpell.tokenizer import Tokenizer
+from Pydurma.aligners.aligner import Aligner
+from Pydurma.input_filters.pattern_filter import PatternInputFilter
+from Pydurma.tokenizer import Tokenizer
 
 class CommonSpeller():
 

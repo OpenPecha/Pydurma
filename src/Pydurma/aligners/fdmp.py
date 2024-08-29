@@ -3,10 +3,10 @@ import logging
 from fast_diff_match_patch import diff
 from typing import Tuple, List, Dict
 
-from CommonSpell.aligners.aligner import Aligner, TokenMatrix
-from CommonSpell.aligners.post_processing_matrix import merge_consecutive_diff_tokens_entries
-from CommonSpell.tokenizer import TokenList
-from CommonSpell.utils.utils import *
+from Pydurma.aligners.aligner import Aligner, TokenMatrix
+from Pydurma.aligners.post_processing_matrix import merge_consecutive_diff_tokens_entries
+from Pydurma.tokenizer import TokenList
+from Pydurma.utils.utils import *
 
 # a diff returned by fdmp is a tuple with two values:
 # - a character: '=', '-' or '+' with self-evident signification
