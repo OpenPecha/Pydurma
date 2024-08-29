@@ -1,6 +1,6 @@
 import re
 from typing import Pattern
-from CommonSpell.input_filters.input_filter import InputFilter
+from Pydurma.input_filters.input_filter import InputFilter
 import logging
 
 class PatternInputFilter(InputFilter):

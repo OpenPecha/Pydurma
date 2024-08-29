@@ -1,8 +1,8 @@
 from typing import Tuple, List
 
-from CommonSpell.normalizer import Normalizer
-from CommonSpell.encoder import Encoder
-from CommonSpell.input_filters.input_filter import InputFilter
+from Pydurma.normalizer import Normalizer
+from Pydurma.encoder import Encoder
+from Pydurma.input_filters.input_filter import InputFilter
 
 Token = Tuple[int, int, int, str, int]
 TokenList = List[Token]

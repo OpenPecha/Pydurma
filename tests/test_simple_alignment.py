@@ -1,11 +1,11 @@
 import logging
 import pytest
 
-from CommonSpell.gen.tokenizer_gen import GenericTokenizer
-from CommonSpell.encoder import Encoder
-from CommonSpell.aligners.fdmp import FDMPaligner
-from CommonSpell.gen.normalizer_gen import GenericNormalizer
-from CommonSpell.utils.utils import *
+from Pydurma.gen.tokenizer_gen import GenericTokenizer
+from Pydurma.encoder import Encoder
+from Pydurma.aligners.fdmp import FDMPaligner
+from Pydurma.gen.normalizer_gen import GenericNormalizer
+from Pydurma.utils.utils import *
 
 
 #logging.basicConfig(level=logging.DEBUG)

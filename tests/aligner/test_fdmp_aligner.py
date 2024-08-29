@@ -1,5 +1,5 @@
 from pathlib import Path
-from CommonSpell.aligners.fdmp import FDMPaligner
+from Pydurma.aligners.fdmp import FDMPaligner
 
 
 

@@ -1,8 +1,8 @@
 import re
 from enum import Enum
 
-from CommonSpell import config
-from CommonSpell.normalizer import Normalizer
+from Pydurma import config
+from Pydurma.normalizer import Normalizer
 
 
 class Cats(Enum):

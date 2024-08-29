@@ -4,10 +4,10 @@ import regex
 
 from typing import Tuple
 
-from CommonSpell.normalizer import Normalizer
-from CommonSpell.bo.normalizer_bo import TibetanNormalizer
-from CommonSpell.tokenizer import Tokenizer, TokenList
-from CommonSpell.encoder import Encoder
+from Pydurma.normalizer import Normalizer
+from Pydurma.bo.normalizer_bo import TibetanNormalizer
+from Pydurma.tokenizer import Tokenizer, TokenList
+from Pydurma.encoder import Encoder
 
 class TibetanTokenizer(Tokenizer):
 

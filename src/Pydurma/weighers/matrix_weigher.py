@@ -1,8 +1,8 @@
 from typing import List, Tuple
 
-from CommonSpell.tokenizer import Token
-from CommonSpell.aligners.aligner import TokenMatrix
-from CommonSpell.weighers.token_weigher import TokenWeigher
+from Pydurma.tokenizer import Token
+from Pydurma.aligners.aligner import TokenMatrix
+from Pydurma.weighers.token_weigher import TokenWeigher
 
 WeightedWeights = Tuple[List[int], int]
 WeightedWeighers = Tuple[TokenWeigher, int]

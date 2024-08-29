@@ -1,6 +1,6 @@
 import re
 
-from CommonSpell.normalizer import Normalizer
+from Pydurma.normalizer import Normalizer
 
 class GenericNormalizer(Normalizer):
 

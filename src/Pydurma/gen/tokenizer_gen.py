@@ -2,9 +2,9 @@ from typing import List, Tuple
 
 import regex
 
-from CommonSpell.normalizer import Normalizer
-from CommonSpell.tokenizer import Token, Tokenizer, TokenList
-from CommonSpell.encoder import Encoder
+from Pydurma.normalizer import Normalizer
+from Pydurma.tokenizer import Token, Tokenizer, TokenList
+from Pydurma.encoder import Encoder
 
 
 class GenericTokenizer(Tokenizer):

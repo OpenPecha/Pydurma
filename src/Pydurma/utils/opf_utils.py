@@ -5,7 +5,7 @@ from openpecha.core.layer import Layer, LayerEnum, PechaMetadata
 from openpecha.core.annotations import OCRConfidence, Pagination, Span, BaseAnnotation
 from typing import List
 
-from CommonSpell.tokenizer import Token
+from Pydurma.tokenizer import Token
 
 class OPSegment:
     """
