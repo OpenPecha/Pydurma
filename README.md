@@ -34,6 +34,7 @@ Using this automated selection directly can easily be gasped at, but we want to 
 - are fully automatic and thus uncritical (*uncritical editions*?), but can be produced on a large scale (*industrial editions*?)
 - do not try to reproduce one variant in particular as their base (in that sense are not *diplomatic editions*, perhaps *undiplomatic editions*?)
 - are intended to be similar to the concept of *vulgate* ("a commonly accepted text or reading" [MW](https://www.merriam-webster.com/dictionary/vulgate))
+- can be regenerated from different inputs (improved OCR, more versions, etc.) giving a different output, and are thus temporary (or at least, not meant to be definitive)
 - optimize measurable linguistic soundness
 - as a result, are a good base for an AI-ready corpus
 
@@ -48,6 +49,7 @@ Pydurma operates in three steps:
 - Variant Selection
 
 Here is that process:
+
 ### Preprocessing
 
 ![image](https://user-images.githubusercontent.com/51434640/218644335-7b74e48e-649a-45e4-9441-b550b6e70825.png)
