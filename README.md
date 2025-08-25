@@ -1,120 +1,62 @@
 # README
 
-## Table of contents
-
-<p align="center">
-  <a href="#project-description">Project description</a> •
-  <a href="#who-this-project-is-for">Who this project is for</a> •
-  <a href="#project-dependencies">Project dependencies</a> •
-  <a href="#instructions-for-use">Instructions for use</a> •
-  <a href="#contributing-guidelines">Contributing guidelines</a> •
-  <a href="#additional-documentation">Additional documentation</a> •
-  <a href="#how-to-get-help">How to get help</a> •
-  <a href="#terms-of-use">Terms of use</a>
-</p>
-<hr>
-
 ## Project description
 
-Pydurma creates a clean e-text version of a Tibetan work from multiple flawed sources.
+Pydurma is a fast and modular collation engine that:
+- uses a very fast collation mechanism ([diff-match-patch](https://github.com/google/diff-match-patch) instead of [Needleman-Wunsch](https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm))
+- makes it easy to define language-specific tokenization and normalization, necessary for languages like Tibetan
+- keeps track of the character position in the original files (even XML files where markup is removed in normalization)
+- has a configurable engine to select the best reading, based on reading frequency among versions, OCR confidence index, language-specific knowledge, etc.
 
-Benefits include:
+It does not:
+- use any non-tabular (graph) representation (à la CollateX)
+- implement reajustments of alignment based on the distance between tokens (à la CollateX)
+- detect [transpositions](http://multiversiondocs.blogspot.com/2008/10/transpositions.html)
 
-- Automatic proofreading of Tibetan e-texts
-- Creating high-quality e-texts from low-quality sources
-- Doesn't require a spell checker (which doesn't exist yet for Tibetan language)
+It does not yet:
+- use subword tokenizers à la [sentencepiece](https://github.com/google/sentencepiece), potentially more robust on dirty (OCR) data than those based on linguistic features (spaces punctuation, etc.)
+- allow configurable token distance function based on language-specific knowledge (graphical closeness, phonetic closeness)
+- implement STAR algorithm to find the best "base" between different editions
 
-Pydurma uses a weighted majority algorithm that compares versions of the work syllable-by-syllable and chooses the most common character from among the versions in each position of the text. Since mistakes—whether made during the woodblock carving, hand copying, digital text inputting, or OCRing process—are unlikely to be the same in the majority of the versions, they are unlikely to outrank the correct characters in any given position of the text. The result is a new clean version called a "vulgate edition."
+We intend Pydurma to be used in large scale projects to automate:
+- merging different OCR outputs of the same images, selecting the best version of each of them
+- creating an edition that averages all other editions automatically
 
-### Uncritical editions or vulgates
+The name Pydurma is a combination of:
+- *Python*
+- *Pedurma* དཔེ་བསྡུར་མ།, Tibetan for critical or diplomatic edition
 
-**vulgate** (noun) /ˈvəl-ˌgāt/ or /ˈvʌlɡeɪt/: *2. a commonly accepted text or reading.*
+### Note on possible workflows based on Pydurma
 
-Medieval Latin *vulgata*, from Late Latin *vulgata editio*: edition in general circulation.
+While Pydurma can be used in a classical [Lachmann](https://en.wikipedia.org/wiki/Karl_Lachmann)ian critical edition process, its innovative design allows it to automate the process of variant selection.
 
-“Vulgate.” Merriam-Webster.com Dictionary, Merriam-Webster, https://www.merriam-webster.com/dictionary/vulgate. Accessed 23 Dec. 2022.
+Using this automated selection directly can easily be gasped at, but we want to defend this concept. The type of editions Pydurma can produce:
+- are fully automatic and thus uncritical (*uncritical editions*?), but can be produced on a large scale (*industrial editions*?)
+- do not try to reproduce one variant in particular as their base (in that sense are not *diplomatic editions*, perhaps *undiplomatic editions*?)
+- are intended to be similar to the concept of *vulgate* ("a commonly accepted text or reading" [MW](https://www.merriam-webster.com/dictionary/vulgate))
+- optimize measurable linguistic soundness
+- as a result, are a good base for an AI-ready corpus
 
-This less common sense of the term *vulgate* represents the objective of this project.
-
-## Who this project is for
-
-This project is intended for:
-
-- Publishers who need clean copies of texts to publish books
-- Developers who need clean data to train AI models
-- Anyone who needs to proofread a Tibetan text and has access to multiple versions, such as in the [BDRC library](https://library.bdrc.io).
-
-## Dependencies
-
-Before you start, ensure you've installed:
-
-- python >= 3.7
-- [openpecha](https://github.com/OpenPecha/Toolkit)
-- regex
-- fast-diff-match-patch
-
-## Requirements 
-
-To create a vulgate edition, you'll need:
-
-- A reference pecha in the [OPF format](https://openpecha.org/data/opf-format/)
-- Several witness pechas in the OPF format (a witness is a version of a text)
-
-> **Note** To convert files into the OPF format, use [OpenPecha Tools](https://github.com/OpenPecha/Toolkit). 
-> 
-> You can also convert scanned texts in the [BDRC library](https://library.bdrc.io) to the OPF format with the [OCR Pipeline](https://tools.openpecha.org/ocr/).
-> 
-> To test Pydurma, you can also use the OPF files in the [text folder](https://github.com/OpenPecha/fast-collation-tools/tree/main/tests) in this repo.
-
-## Instructions for use
-
-### Configure Pydurma
-
-Assuming you've installed the software above and have OPF files:
-
-1. Clone this repo.
-1. Add witnesses in the OPF format into your cloned repo.
-1. Open `vulgatizer_op_ocr.py` in a code editor.
-1. Update the paths to the actual witness folders in this code block:
-
-```
-def test_merger():
-	op_output = OpenPechaFS("ITEST.opf")
-	vulgatizer = VulgatizerOPTibOCR(op_output)
-	vulgatizer.add_op_witness(OpenPechaFS("./test/opfs/I001/I001.opf"))
-	vulgatizer.add_op_witness(OpenPechaFS("./test/opfs/I002/I002.opf"))
-	vulgatizer.add_op_witness(OpenPechaFS("./test/opfs/I003/I003.opf"))
-	vulgatizer.create_vulgate()
-```
-
-### Run Pydurma
-
-- Run `vulgatizer_op_ocr.py`
-
-The vulgate edition OPF will be saved in `./data/opfs/generic_editions`.
-
-### Limitations
-
-- No code to detect [transpositions](http://multiversiondocs.blogspot.com/2008/10/transpositions.html).
+A workflow using Pydurma can work on a very large scale with minimal human intervention, which we hope can be a game changer for under-resourced literary traditions like the Tibetan tradition.
 
 ## Pydurma workflow
 
-Pydurma creates common spell editions in three steps:
+Pydurma operates in three steps:
 
 - Preprocessing
-- Alignment
-- Vulgatization
+- Collation
+- Variant Selection
 
 Here is that process:
 ### Preprocessing
 
 ![image](https://user-images.githubusercontent.com/51434640/218644335-7b74e48e-649a-45e4-9441-b550b6e70825.png)
 
-### Alignment
+### Collation
 
 ![image](https://user-images.githubusercontent.com/51434640/218644409-14e73234-bdda-4ae6-aa15-6a9fce600889.png)
 
-### Vulgatization
+### Variant Selection
 
 ![image](https://user-images.githubusercontent.com/51434640/218644467-a2c487d5-8313-4940-b640-78bc2258e78c.png)
 
@@ -144,17 +86,19 @@ Here is that process:
 - [Needleman–Wunsch algorithm](https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm)
 - [Spencer 2004](http://dx.doi.org/10.1007/s10579-004-8682-1): Spencer M., Howe and Christopher J., 2004. Collating Texts Using Progressive Multiple Alignment. Computers and the Humanities. 38/2004, 253–270.
 
-
-## Contributing guidelines
-
-If you'd like to help out, check out our [contributing guidelines](/CONTRIBUTING.md).
-
 ## Need help?
 
-- File an [issue](https://github.com/OpenPecha/Pydurma/issues/new).
-- Join our [Discord](https://discord.com/invite/7GFpPFSTeA) and ask us there.
-- Email us at openpecha[at]gmail[dot]com.
+- File an [issue](https://github.com/buda-base/Pydurma/issues/new)
+- Join our [Discord](https://discord.com/invite/7GFpPFSTeA) and ask us there
 
 ## Terms of use
 
 Pydurma is licensed under the [Apache license](/LICENSE.md).
+
+## Acknowledgements and citation
+
+Pydurma is a creation of:
+- the [Buddhist Digital Resource Center](https://www.bdrc.io/)
+- [OpenPecha](https://github.com/OpenPecha/)
+
+The intended use of Pydurma at the Buddhist Digital Resource Center was presented at the *Digital Humanities Workshop & Symposium* organized in January 2023 at the University of Hamburg (see [summary of the symposium](https://www.kc-tbts.uni-hamburg.de/events/2023-01-14-dh-symposium-completed.html), slide selection available [here](https://drive.google.com/file/d/11WI8v-2mJVBqf2g5GOGCIIjwu1truISb/view?usp=sharing)).
