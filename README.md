@@ -102,3 +102,13 @@ Pydurma is a creation of:
 - [OpenPecha](https://github.com/OpenPecha/)
 
 The intended use of Pydurma at the Buddhist Digital Resource Center was presented at the *Digital Humanities Workshop & Symposium* organized in January 2023 at the University of Hamburg (see [summary of the symposium](https://www.kc-tbts.uni-hamburg.de/events/2023-01-14-dh-symposium-completed.html), slide selection available [here](https://drive.google.com/file/d/11WI8v-2mJVBqf2g5GOGCIIjwu1truISb/view?usp=sharing)).
+
+```bibtex
+@software{
+  Roux_Pydurma_2023,
+  author = {Roux, Elie},
+  title = {{Pydurma}},
+  url = {https://github.com/openpecha/pydurma},
+  version = {0.1.0}
+}
+```
