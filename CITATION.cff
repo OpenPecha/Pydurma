@@ -4,6 +4,9 @@ authors:
 - family-names: "Roux"
   given-names: "Elie"
   orcid: "https://orcid.org/0000-0002-3787-8226"
+- family-names: ""
+  given-name: "Tenzin Kaldan"
+  orcid: "https://orcid.org/0000-0003-2952-0491"
 title: "Pydurma"
 version: 0.1.0
 date-released: 2023-01-14
