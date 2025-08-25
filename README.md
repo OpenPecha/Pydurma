@@ -15,8 +15,9 @@ It does not:
 
 It does not yet:
 - use subword tokenizers à la [sentencepiece](https://github.com/google/sentencepiece), potentially more robust on dirty (OCR) data than those based on linguistic features (spaces punctuation, etc.)
-- allow configurable token distance function based on language-specific knowledge (graphical closeness, phonetic closeness)
+- allow configurable token distance function based on language-specific knowledge (graphical distance, phonetic distance) to reajust alignment (à la CollateX' `near_match=True` option)
 - implement STAR algorithm to find the best "base" between different editions
+- have a clearly defined export format for the collated text or critical apparatus
 
 We intend Pydurma to be used in large scale projects to automate:
 - merging different OCR outputs of the same images, selecting the best version of each of them
@@ -108,9 +109,11 @@ The intended use of Pydurma at the Buddhist Digital Resource Center was presente
 ```bibtex
 @software{
   Roux_Pydurma_2023,
-  author = {Roux, Elie},
+  author = {Roux, Elie AND Tenzin Kaldan},
   title = {{Pydurma}},
   url = {https://github.com/openpecha/pydurma},
   version = {0.1.0}
 }
 ```
+
+@software{Roux_Pydurma_2023,author = {Roux, Elie and },month = jan,title = {{Pydurma}},url = {https://github.com/openpecha/pydurma},version = {0.1.0},year = {2023}}
